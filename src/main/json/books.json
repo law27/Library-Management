@@ -1,0 +1,51 @@
+[
+    {
+        "quantity": 10,
+        "genre": "computer",
+        "book_author": "lawrance",
+        "id": "61d0146c-65d5-4241-be23-7b68f631d61f",
+        "book_name": "java"
+    },
+    {
+        "quantity": 11,
+        "genre": "action",
+        "book_author": "lawrance",
+        "id": "9c87c518-ab28-4d94-9403-e41ed4a5b041",
+        "book_name": "spider-man"
+    },
+    {
+        "quantity": 12,
+        "genre": "computer",
+        "book_author": "lawrance",
+        "id": "a1745d33-bdae-445d-a143-31a6068b2c78",
+        "book_name": "python"
+    },
+    {
+        "quantity": 10,
+        "genre": "action",
+        "book_author": "stan lee",
+        "id": "1f83d683-61f3-4818-86e8-1f825ae6fe37",
+        "book_name": "x-men"
+    },
+    {
+        "quantity": 12,
+        "genre": "computer",
+        "book_author": "lawrance",
+        "id": "f660f221-8bd7-4fc5-98f4-850209bf086b",
+        "book_name": "c++"
+    },
+    {
+        "quantity": 12,
+        "genre": "computer",
+        "book_author": "lawrance",
+        "id": "30d038db-1fb4-4cb5-b560-a48d24940c8f",
+        "book_name": "vim"
+    },
+    {
+        "quantity": 15,
+        "genre": "computer",
+        "book_author": "lawrance",
+        "id": "d37b1247-488c-4f1b-beb0-b3831fdc34d7",
+        "book_name": "gtk-3"
+    }
+]

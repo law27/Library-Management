@@ -1,0 +1,18 @@
+[
+    {
+        "password": "lawrance",
+        "mobile-number": "3842378462",
+        "name": "lawrance",
+        "id": 1,
+        "access-level": 1,
+        "age": 21
+    },
+    {
+        "password": "admin123",
+        "mobile-number": "14234234",
+        "name": "admin",
+        "id": 2,
+        "access-level": 0,
+        "age": 21
+    }
+]
