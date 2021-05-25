@@ -73,9 +73,19 @@ public class BorrowBookDao implements IBorrowBookDao {
 
     public void returnABook(String bookId, String userName) throws SQLException {
             int userId = GlobalDataSource.getDataSource().getUserDao().getUserId(userName);
-            String sql = String.format("DELETE FROM borrowed_books WHERE user_id=%d AND book_id=%s",userId, Utility.getFormattedString(bookId));
-            System.out.println(sql);
-            DataSourceDatabase.sqlExecutionerForDML(sql);
-            GlobalDataSource.getDataSource().getBookDao().increaseQuantityOfBook(bookId, 1);
+            var borrowedBooks = getAllBorrowedBook(userName);
+            boolean returned = false;
+            for(var book : borrowedBooks) {
+                if(book.getBook().getId().equals(bookId)) {
+                    String sql = String.format("DELETE FROM borrowed_books WHERE user_id=%d AND book_id=%s",userId, Utility.getFormattedString(bookId));
+                    System.out.println(sql);
+                    DataSourceDatabase.sqlExecutionerForDML(sql);
+                    GlobalDataSource.getDataSource().getBookDao().increaseQuantityOfBook(bookId, 1);
+                    returned = true;
+                }
+            }
+            if(!returned) {
+                throw new IllegalStateException("No such borrowed book");
+            }
     }
 }

@@ -17,6 +17,11 @@ public class BookService {
         bookDao = GlobalDataSource.getDataSource().getBookDao();
     }
 
+    public BookService(IBookDao bookDao) {
+        sc = new Scanner(System.in);
+        this.bookDao = bookDao;
+    }
+
     private void printHeadings() {
         System.out.println("Id\t\t\t\t\t\t\t\t\t\tBook Name\tAuthor\t\tQuantity\t\tGenre");
         System.out.println("==\t\t\t\t\t\t\t\t\t\t=========\t======\t\t========\t\t=====");

@@ -19,6 +19,12 @@ public class UserService {
         borrowBookDao = GlobalDataSource.getDataSource().getBorrowBookDao();
     }
 
+    public UserService(IUserDao userDao, IBorrowBookDao borrowBookDao) {
+        sc = new Scanner(System.in);
+        this.userDao = userDao;
+        this.borrowBookDao = borrowBookDao;
+    }
+
 
     private void printUser(User user) {
         if(user == null) {

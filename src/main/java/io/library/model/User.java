@@ -9,7 +9,7 @@ public class User {
     private String mobileNumber;
     private int age;
     private AccessLevel accessLevel;
-    private final IMenu menu;
+    private IMenu menu;
 
 
     public User(String userName,
@@ -75,5 +75,9 @@ public class User {
 
     public IMenu getMenu() {
         return menu;
+    }
+
+    public void setMenu(IMenu menu) {
+        this.menu = menu;
     }
 }

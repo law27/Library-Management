@@ -21,6 +21,12 @@ public class BorrowService {
         borrowBookDao = GlobalDataSource.getDataSource().getBorrowBookDao();
     }
 
+    public BorrowService(User user, IBorrowBookDao bookDao) {
+        sc = new Scanner(System.in);
+        this.user = user;
+        this.borrowBookDao = bookDao;
+    }
+
     public void borrowABook() {
         System.out.print("Enter book id: ");
         String bookId = sc.nextLine();
