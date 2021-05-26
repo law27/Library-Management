@@ -57,8 +57,8 @@ public class BorrowBookDaoJSON implements IBorrowBookDao {
             JSONObject object = new JSONObject();
             object.put("book_id", bookId);
             object.put("user_id", userId);
-            object.put("borrowed_date", today);
-            object.put("return_date", returnDate);
+            object.put("borrowed_date", today.toString());
+            object.put("return_date", returnDate.toString());
             DataSourceJSON.getInstance().writeBorrow(object);
         }
         bookDao.decreaseQuantityOfBook(bookId, 1);

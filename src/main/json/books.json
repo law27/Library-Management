@@ -42,10 +42,17 @@
         "book_name": "vim"
     },
     {
-        "quantity": 14,
+        "quantity": 13,
         "genre": "computer",
         "book_author": "lawrance",
         "id": "d37b1247-488c-4f1b-beb0-b3831fdc34d7",
         "book_name": "gtk-3"
+    },
+    {
+        "quantity": 10,
+        "genre": "computer",
+        "book_author": "lawrance",
+        "id": "2bba4549-7da4-44de-a5da-904514c77f00",
+        "book_name": "c#"
     }
 ]

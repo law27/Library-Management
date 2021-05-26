@@ -14,9 +14,9 @@ public class DataSourceJSON implements IDataSource {
     private File books;
     private File users;
     private File borrow;
-    private JSONArray bookJsonArray = null;
     private JSONArray userJsonArray = null;
     private JSONArray borrowJsonArray = null;
+    private JSONArray bookJsonArray = null;
 
     private DataSourceJSON() {
         this.userDao = new UserDaoJSON();
@@ -103,33 +103,39 @@ public class DataSourceJSON implements IDataSource {
             String jsonString = readFromFile(borrow);
             borrowJsonArray = new JSONArray(jsonString);
         }
-        return userJsonArray;
+        return borrowJsonArray;
     }
 
     public synchronized void writeBook(JSONObject book) {
         JSONArray booksArray = readBooks();
         booksArray.put(book);
+        writeBooks(booksArray);
     }
 
     public synchronized void writeUser(JSONObject userObject) {
         JSONArray usersArray = readUsers();
         usersArray.put(userObject);
+        writeUsers(usersArray);
     }
 
     public synchronized void writeBorrow(JSONObject borrowObject) {
         JSONArray borrowsArray = readBorrow();
         borrowsArray.put(borrowObject);
+        writeBorrows(borrowsArray);
     }
 
-    public void writeBooks(JSONArray newBooks) {
-        writeToFile(newBooks, books);
+    public synchronized void writeBooks(JSONArray newBooks) {
+        bookJsonArray = newBooks;
+        writeToFile(bookJsonArray, books);
     }
 
-    public void writeBorrows(JSONArray borrowedBooks) {
-        writeToFile(borrowedBooks, borrow);
+    public synchronized void writeBorrows(JSONArray newBorrowedBooks) {
+        borrowJsonArray = newBorrowedBooks;
+        writeToFile(borrowJsonArray, borrow);
     }
 
-    public void writeUsers(JSONArray newUsers) {
-        writeToFile(newUsers, users);
+    public synchronized void writeUsers(JSONArray newUsers) {
+        userJsonArray = newUsers;
+        writeToFile(userJsonArray, users);
     }
 }

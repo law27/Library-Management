@@ -14,5 +14,13 @@
         "id": 2,
         "access-level": 0,
         "age": 21
+    },
+    {
+        "password": "lawrance",
+        "mobile-number": "14234",
+        "name": "law27",
+        "id": 3,
+        "access-level": 1,
+        "age": 12
     }
 ]

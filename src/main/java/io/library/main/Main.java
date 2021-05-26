@@ -36,7 +36,7 @@ public class Main {
                 System.out.println(exception.getMessage());
             }
             catch (Exception e) {
-                System.out.println("Unable to connect to the database/datastore. Please Try Later");
+                System.out.println("Some error occurred. Please Try Later");
             }
     }
 }
