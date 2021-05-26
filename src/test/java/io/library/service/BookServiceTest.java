@@ -1,16 +1,20 @@
 package io.library.service;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import io.library.dao.BookDao;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 
+@ExtendWith(MockitoExtension.class)
 class BookServiceTest {
-    // TODO: Write tests and mocks
-    @BeforeEach
-    void setUp() {
+    @Mock
+    BookDao bookDao;
+    BookService bookService;
+
+    public BookServiceTest() {
+        bookService = new BookService(bookDao);
     }
 
-    @AfterEach
-    void tearDown() {
-    }
+
 }

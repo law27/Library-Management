@@ -6,6 +6,7 @@ import io.library.datasource.GlobalDataSource;
 import io.library.menu.MainMenu;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -28,11 +29,14 @@ public class Main {
                     DataSourceDatabase.getInstance().createConnection(properties);
                     GlobalDataSource.setDataSource(DataSourceDatabase.getInstance());
                 }
+                MainMenu menu = new MainMenu();
+                menu.show();
+            }
+            catch (FileNotFoundException exception) {
+                System.out.println(exception.getMessage());
             }
             catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Unable to connect to the database/datastore. Please Try Later");
             }
-            MainMenu menu = new MainMenu();
-            menu.show();
     }
 }
