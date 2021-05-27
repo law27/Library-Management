@@ -30,7 +30,7 @@ class BorrowBookDaoTest {
     }
 
     @BeforeAll
-    static void createConnection() throws SQLException {
+    static void createConnection() {
         String fileName = "application.properties";
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Properties properties = new Properties();
@@ -41,11 +41,13 @@ class BorrowBookDaoTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        String userDelete = "DELETE FROM users";
-//        String bookDelete = "DELETE FROM books";
-//        DataSourceDatabase.sqlExecutionerForDML(userDelete);
-//        DataSourceDatabase.sqlExecutionerForDML(bookDelete);
-//        DataSourceDatabase.commitToDatabase();
+        /*
+                String userDelete = "DELETE FROM users";
+                String bookDelete = "DELETE FROM books";
+                DataSourceDatabase.sqlExecutionerForDML(userDelete);
+                DataSourceDatabase.sqlExecutionerForDML(bookDelete);
+                DataSourceDatabase.commitToDatabase();
+        */
     }
 
     @AfterAll
@@ -148,7 +150,5 @@ class BorrowBookDaoTest {
 
         assertThat(quantityBeforeReturn).isEqualTo(quantityAfterReturn - 1);
     }
-
-
 
 }

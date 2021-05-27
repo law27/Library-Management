@@ -5,6 +5,7 @@ import io.library.dao.IBookDao;
 import io.library.datasource.GlobalDataSource;
 import io.library.model.Book;
 
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -14,8 +15,13 @@ public class BookService {
     public static BookService bookService = null;
 
     private BookService() {
-        sc = new Scanner(System.in);
+        sc = Utility.getScanner();
         bookDao = GlobalDataSource.getDataSource().getBookDao();
+    }
+
+    private BookService(InputStream stream, IBookDao bookDao) {
+        sc = new Scanner(stream);
+        this.bookDao = bookDao;
     }
 
     public static BookService getInstance() {
@@ -26,11 +32,14 @@ public class BookService {
     }
 
     // For Mocking purpose
-    protected static BookService getInstance(IBookDao bookDao) {
+    protected static BookService getInstance(InputStream stream, IBookDao bookDao) {
         if(bookService == null) {
-            bookService = new BookService();
+            bookService = new BookService(stream, bookDao);
         }
-        bookService.bookDao = bookDao;
+        else {
+            sc = new Scanner(stream);
+            bookService.bookDao = bookDao;
+        }
         return bookService;
     }
 
@@ -124,7 +133,7 @@ public class BookService {
         }
     }
 
-    public void printOptions() {
+    private void printOptions() {
         System.out.println("1. Search by Author");
         System.out.println("2. Search by Book Name");
         System.out.println("3. Search by Id");
