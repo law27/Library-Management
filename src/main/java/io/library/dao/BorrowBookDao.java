@@ -25,19 +25,20 @@ public class BorrowBookDao implements IBorrowBookDao {
                 "       borrowed_books.return_date\n" +
                 "       FROM borrowed_books INNER JOIN books on borrowed_books.book_id = books.id INNER JOIN users on borrowed_books.user_id = users.id\n" +
                 "       WHERE user_id=%d", userId);
-        ResultSet resultSet = DataSourceDatabase.sqlExecutionerForSelect(sql);
-        while (resultSet.next()) {
-            String bookId = resultSet.getString("books.id");
-            String bookName = resultSet.getString("books.book_name");
-            String bookAuthor = resultSet.getString("books.book_author");
-            String borrowedDate = resultSet.getString("borrowed_books.borrowed_date");
-            String returnDate = resultSet.getString("borrowed_books.return_date");
-            String name = resultSet.getString("users.name");
-            String genre = resultSet.getString("books.genre");
-            int quantity = resultSet.getInt("books.quantity");
-            Book book = new Book(bookId, bookName, bookAuthor, quantity, genre);
-            BorrowedBook bookDao = new BorrowedBook(book, borrowedDate, returnDate, name);
-            borrowedBooks.add(bookDao);
+        try(ResultSet resultSet = DataSourceDatabase.sqlExecutionerForSelect(sql)) {
+            while (resultSet.next()) {
+                String bookId = resultSet.getString("books.id");
+                String bookName = resultSet.getString("books.book_name");
+                String bookAuthor = resultSet.getString("books.book_author");
+                String borrowedDate = resultSet.getString("borrowed_books.borrowed_date");
+                String returnDate = resultSet.getString("borrowed_books.return_date");
+                String name = resultSet.getString("users.name");
+                String genre = resultSet.getString("books.genre");
+                int quantity = resultSet.getInt("books.quantity");
+                Book book = new Book(bookId, bookName, bookAuthor, quantity, genre);
+                BorrowedBook bookDao = new BorrowedBook(book, borrowedDate, returnDate, name);
+                borrowedBooks.add(bookDao);
+            }
         }
         return borrowedBooks;
     }
