@@ -16,11 +16,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class BookDaoTest {
-    Book book;
-    BookDao bookDao;
+    static Book book;
+    static BookDao bookDao;
 
     @BeforeAll
-    static void createConnection() {
+    static void createConnection() throws SQLException {
         String fileName = "application.properties";
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Properties properties = new Properties();
@@ -31,10 +31,14 @@ class BookDaoTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        String bookDelete = "DELETE FROM books";
+        DataSourceDatabase.sqlExecutionerForDML(bookDelete);
     }
 
     @AfterAll
     static void closeDataBaseConnection() throws SQLException {
+        String sql = "DELETE FROM books";
+        DataSourceDatabase.sqlExecutionerForDML(sql);
         DataSourceDatabase.closeDataBaseConnection();
     }
 

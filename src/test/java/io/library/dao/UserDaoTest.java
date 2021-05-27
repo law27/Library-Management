@@ -21,7 +21,7 @@ class UserDaoTest {
     User user;
 
     @BeforeAll
-    static void createConnection() {
+    static void createConnection() throws SQLException {
         String fileName = "application.properties";
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Properties properties = new Properties();
@@ -32,10 +32,14 @@ class UserDaoTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        String userDelete = "DELETE FROM users";
+        DataSourceDatabase.sqlExecutionerForDML(userDelete);
     }
 
     @AfterAll
     static void closeDataBaseConnection() throws SQLException {
+        String sql = "DELETE FROM users";
+        DataSourceDatabase.sqlExecutionerForDML(sql);
         DataSourceDatabase.closeDataBaseConnection();
     }
 

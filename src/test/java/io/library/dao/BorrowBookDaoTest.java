@@ -36,6 +36,10 @@ class BorrowBookDaoTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        String userDelete = "DELETE FROM users";
+        String bookDelete = "DELETE FROM books";
+        DataSourceDatabase.sqlExecutionerForDML(userDelete);
+        DataSourceDatabase.sqlExecutionerForDML(bookDelete);
         UserDao userDao = new UserDao();
         bookDao = new BookDao();
         borrowBookDao = new BorrowBookDao();
