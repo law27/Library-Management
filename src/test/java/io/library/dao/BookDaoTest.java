@@ -3,7 +3,6 @@ package io.library.dao;
 import io.library.datasource.DataSourceDatabase;
 import io.library.datasource.GlobalDataSource;
 import io.library.model.Book;
-import io.library.service.Utility;
 import org.junit.jupiter.api.*;
 
 import java.io.InputStream;
@@ -16,11 +15,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class BookDaoTest {
-    static Book book;
-    static BookDao bookDao;
+    private final BookDao bookDao;
+
+    public BookDaoTest() {
+        bookDao = new BookDao();
+    }
 
     @BeforeAll
-    static void createConnection() throws SQLException {
+    static void createConnection() {
         String fileName = "application.properties";
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Properties properties = new Properties();
@@ -31,35 +33,21 @@ class BookDaoTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String bookDelete = "DELETE FROM books";
-        DataSourceDatabase.sqlExecutionerForDML(bookDelete);
     }
 
     @AfterAll
     static void closeDataBaseConnection() throws SQLException {
         String sql = "DELETE FROM books";
         DataSourceDatabase.sqlExecutionerForDML(sql);
+        DataSourceDatabase.commitToDatabase();
         DataSourceDatabase.closeDataBaseConnection();
-    }
-
-    @BeforeEach
-    void setUp() throws SQLException {
-        bookDao = new BookDao();
-        book = new Book(UUID.randomUUID().toString(), "js", "lawrance", 10, "computer");
-        String sql = String.format("INSERT INTO books(id, book_name, book_author, quantity, genre) VALUES(%s, %s, %s, %d, %s)",
-                Utility.getFormattedString(book.getId()),
-                Utility.getFormattedString(book.getBookName()),
-                Utility.getFormattedString(book.getAuthor()),
-                book.getQuantity(),
-                Utility.getFormattedString(book.getGenre())
-        );
-        DataSourceDatabase.sqlExecutionerForDML(sql);
     }
 
     @AfterEach
     void tearDown() throws SQLException {
         String sql = "DELETE FROM books";
         DataSourceDatabase.sqlExecutionerForDML(sql);
+        DataSourceDatabase.commitToDatabase();
     }
 
     @Test
@@ -73,6 +61,8 @@ class BookDaoTest {
 
     @Test
     void checkGetBookByGenre() throws SQLException {
+        Book book = new Book(UUID.randomUUID().toString(), "js", "lawrance", 10, "computer");
+        bookDao.addBook(book);
         List<Book> books = bookDao.getBookByGenre("computer");
         assertThat(books.size()).isEqualTo(1);
         assertThat(books.get(0)).isEqualToComparingFieldByField(book);
@@ -80,6 +70,8 @@ class BookDaoTest {
 
     @Test
     void checkGetBookByAuthor() throws SQLException {
+        Book book = new Book(UUID.randomUUID().toString(), "js", "lawrance", 10, "computer");
+        bookDao.addBook(book);
         List<Book> books = bookDao.getBookByAuthor("lawrance");
         assertThat(books.size()).isEqualTo(1);
         assertThat(books.get(0)).isEqualToComparingFieldByField(book);
@@ -87,6 +79,8 @@ class BookDaoTest {
 
     @Test
     void checkGetBookByName() throws SQLException {
+        Book book = new Book(UUID.randomUUID().toString(), "js", "lawrance", 10, "computer");
+        bookDao.addBook(book);
         Book expected = bookDao.getBookByName("js");
         assertThat(expected).isEqualToComparingFieldByField(book);
     }
@@ -99,6 +93,8 @@ class BookDaoTest {
 
     @Test
     void checkIncreaseQuantityOfBook() throws SQLException {
+        Book book = new Book(UUID.randomUUID().toString(), "js", "lawrance", 10, "computer");
+        bookDao.addBook(book);
         int currentQuantity = book.getQuantity();
         bookDao.increaseQuantityOfBook(book.getId(), 2);
         int expectedQuantity = currentQuantity + 2;
@@ -108,6 +104,8 @@ class BookDaoTest {
 
     @Test
     void checkDecreaseQuantityOfBook() throws SQLException {
+        Book book = new Book(UUID.randomUUID().toString(), "js", "lawrance", 10, "computer");
+        bookDao.addBook(book);
         int currentQuantity = book.getQuantity();
         bookDao.decreaseQuantityOfBook(book.getId(), 2);
         int expectedQuantity = currentQuantity - 2;

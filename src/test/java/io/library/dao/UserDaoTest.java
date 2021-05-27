@@ -18,8 +18,10 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 class UserDaoTest {
     UserDao userDao;
-    User user;
 
+    UserDaoTest() {
+        userDao = new UserDao();
+    }
     @BeforeAll
     static void createConnection() throws SQLException {
         String fileName = "application.properties";
@@ -34,27 +36,15 @@ class UserDaoTest {
         }
         String userDelete = "DELETE FROM users";
         DataSourceDatabase.sqlExecutionerForDML(userDelete);
+        DataSourceDatabase.commitToDatabase();
     }
 
     @AfterAll
     static void closeDataBaseConnection() throws SQLException {
         String sql = "DELETE FROM users";
         DataSourceDatabase.sqlExecutionerForDML(sql);
+        DataSourceDatabase.commitToDatabase();
         DataSourceDatabase.closeDataBaseConnection();
-    }
-
-    @BeforeEach
-    void setUp() throws SQLException {
-        userDao = new UserDao();
-        user = new User("test", "test123", "6369399387", 21, AccessLevel.USER, new UserMenu());
-        String sql = String.format("INSERT INTO users(name, password, access_level, mobile_number, age) " +
-                        "VALUES (%s, %s, %d, %s, %d)",
-                Utility.getFormattedString(user.getUserName()),
-                Utility.getFormattedString(user.getPassword()),
-                user.getAccessLevel().ordinal(),
-                Utility.getFormattedString(user.getMobileNumber()),
-                user.getAge());
-        DataSourceDatabase.sqlExecutionerForDML(sql);
     }
 
     @AfterEach
@@ -79,21 +69,28 @@ class UserDaoTest {
     }
 
     @Test
-    public void checkWhetherSameUserNameThrowsException() {
+    public void checkWhetherSameUserNameThrowsException() throws SQLException {
         User testUser = new User("test", "test123", "6369399387", 21, AccessLevel.USER, new UserMenu());
-        assertThatExceptionOfType(SQLException.class).isThrownBy(() -> {
-            userDao.addUser(testUser);
-        });
+        userDao.addUser(testUser);
+        DataSourceDatabase.commitToDatabase();
+        User userWithSameName = new User("test", "test123", "6369399387", 21, AccessLevel.USER, new UserMenu());
+        assertThatExceptionOfType(SQLException.class).isThrownBy(() -> userDao.addUser(userWithSameName));
     }
 
     @Test
     public void checkWhetherUserNameAvailabilityWorks() throws SQLException {
+        User testUser = new User("test", "test123", "6369399387", 21, AccessLevel.USER, new UserMenu());
+        userDao.addUser(testUser);
+        DataSourceDatabase.commitToDatabase();
         assertThat(userDao.checkUserNameAvailability("test")).isFalse();
         assertThat(userDao.checkUserNameAvailability("lawrance")).isTrue();
     }
 
     @Test
     public void checkWhetherGetUserIdReturnsId() throws SQLException {
+        User testUser = new User("test", "test123", "6369399387", 21, AccessLevel.USER, new UserMenu());
+        userDao.addUser(testUser);
+        DataSourceDatabase.commitToDatabase();
         int expected = userDao.getUserId("test");
         assertThat(expected).isPositive();
         expected = userDao.getUserId("user");
@@ -102,6 +99,9 @@ class UserDaoTest {
 
     @Test
     public void checkGetUser() throws SQLException {
+        User testUser = new User("test", "test123", "6369399387", 21, AccessLevel.USER, new UserMenu());
+        userDao.addUser(testUser);
+        DataSourceDatabase.commitToDatabase();
         User expectedUser = userDao.getUser("test");
         Condition<User> expected = new Condition<>((User paramUser) -> (
                 expectedUser.getUserName().equals(paramUser.getUserName()) &&
