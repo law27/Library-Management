@@ -13,5 +13,8 @@ public class Utility {
     public static synchronized Scanner getScanner() {
         return scanner;
     }
+    public static void closeScanner() {
+        scanner.close();
+    }
 
 }

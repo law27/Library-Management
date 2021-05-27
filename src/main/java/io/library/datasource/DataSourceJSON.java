@@ -59,8 +59,7 @@ public class DataSourceJSON implements IDataSource {
 
     private synchronized String readFromFile(File file) {
         String result = null;
-        try {
-            InputStream inputStream = new FileInputStream(file);
+        try(InputStream inputStream = new FileInputStream(file)) {
             result = new String(inputStream.readAllBytes());
         }
         catch (IOException exception) {
@@ -70,12 +69,9 @@ public class DataSourceJSON implements IDataSource {
     }
 
     private synchronized void writeToFile(JSONArray array, File file) {
-        try {
-            FileWriter fileWriter = new FileWriter(file);
-            BufferedWriter writer = new BufferedWriter(fileWriter);
+        try(FileWriter fileWriter = new FileWriter(file);
+            BufferedWriter writer = new BufferedWriter(fileWriter) ) {
             writer.write(array.toString(4));
-            writer.flush();
-            fileWriter.close();
         }
         catch (Exception exception) {
             exception.printStackTrace();

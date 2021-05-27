@@ -2,6 +2,7 @@ package io.library.menu;
 
 import io.library.service.BookService;
 import io.library.service.UserService;
+import io.library.service.Utility;
 
 import java.util.Scanner;
 
@@ -17,7 +18,7 @@ public class AdminMenu implements IMenu {
 
     @Override
     public void show() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = Utility.getScanner();
         boolean satisfied = false;
 
         while (!satisfied) {

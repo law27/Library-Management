@@ -4,6 +4,7 @@ import io.library.datasource.GlobalDataSource;
 import io.library.menu.UserMenu;
 import io.library.model.AccessLevel;
 import io.library.model.User;
+import io.library.service.Utility;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -15,7 +16,7 @@ public class Authentication {
     }
 
     public static void signUp() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = Utility.getScanner();
         boolean completed = false;
         while (!completed) {
             System.out.print("Enter userName: ");

@@ -11,13 +11,15 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BorrowService {
-    Scanner sc;
-    User user;
+    private static Scanner sc = null;
+
+    private User user;
+    private IBorrowBookDao borrowBookDao;
+
     private static BorrowService borrowService;
-    IBorrowBookDao borrowBookDao;
 
     private BorrowService() {
-        sc = new Scanner(System.in);
+        sc = Utility.getScanner();
         user = LoggedInUser.getLoggedInUser();
         borrowBookDao = GlobalDataSource.getDataSource().getBorrowBookDao();
     }
@@ -99,13 +101,18 @@ public class BorrowService {
             boolean satisfied = false;
             while (!satisfied) {
                 listBorrowedBooks(books);
-                System.out.print("Select a book to return ");
-                int option = sc.nextInt();
-                System.out.println();
-                if (option <= 0 || option > books.size()) {
-                    System.out.println("Invalid option try Again");
-                } else {
-                    borrowBookDao.returnABook(books.get(option - 1).getBook().getId(), user.getUserName());
+                if(!books.isEmpty()) {
+                    System.out.print("Select a book to return ");
+                    int option = sc.nextInt();
+                    System.out.println();
+                    if (option <= 0 || option > books.size()) {
+                        System.out.println("Invalid option try Again");
+                    } else {
+                        borrowBookDao.returnABook(books.get(option - 1).getBook().getId(), user.getUserName());
+                        satisfied = true;
+                    }
+                }
+                else {
                     satisfied = true;
                 }
             }

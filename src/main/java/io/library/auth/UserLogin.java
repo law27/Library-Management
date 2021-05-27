@@ -2,6 +2,7 @@ package io.library.auth;
 
 import io.library.datasource.GlobalDataSource;
 import io.library.model.User;
+import io.library.service.Utility;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -23,7 +24,7 @@ public class UserLogin implements ILogin {
 
     @Override
     public boolean loginMechanism() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = Utility.getScanner();
         boolean satisfied = false;
         while (!satisfied) {
             System.out.print("Enter userName: ");

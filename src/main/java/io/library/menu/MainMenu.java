@@ -15,6 +15,7 @@ public class MainMenu implements IMenu {
         System.out.println("1. New User");
         System.out.println("2. User Login");
         System.out.println("3. Admin Login");
+        System.out.println("4. Exit");
     }
 
     @Override
@@ -28,6 +29,7 @@ public class MainMenu implements IMenu {
             System.out.print("Enter your option:   ");
             int userInput = sc.nextInt();
             System.out.println();
+            sc.nextLine();
             switch (userInput) {
                 case 1:
                     Authentication.signUp();
@@ -40,6 +42,8 @@ public class MainMenu implements IMenu {
                     login = Authentication.getLoginInstance(AccessLevel.ADMIN);
                     satisfied = login.loginMechanism();
                     break;
+                case 4:
+                    return;
                 default:
                     System.out.println("Invalid Option");
                     break;

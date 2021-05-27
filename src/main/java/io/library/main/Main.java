@@ -4,6 +4,7 @@ import io.library.datasource.DataSourceDatabase;
 import io.library.datasource.DataSourceJSON;
 import io.library.datasource.GlobalDataSource;
 import io.library.menu.MainMenu;
+import io.library.service.Utility;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,12 +32,14 @@ public class Main {
                 }
                 MainMenu menu = new MainMenu();
                 menu.show();
-                DataSourceDatabase.getInstance().closeConnection();
+                Utility.closeScanner();
+                DataSourceDatabase.closeDataBaseConnection();
             }
             catch (FileNotFoundException exception) {
                 System.out.println(exception.getMessage());
             }
             catch (Exception e) {
+                System.out.println(e.getMessage());
                 System.out.println("Some error occurred. Please Try Later");
             }
             // Runtime.getRuntime().addShutdownHook(new Thread(() -> System.out.println("Hello World")));

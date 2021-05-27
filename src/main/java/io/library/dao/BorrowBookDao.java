@@ -46,7 +46,7 @@ public class BorrowBookDao implements IBorrowBookDao {
         return getAllBorrowedBook(userName).size();
     }
 
-    public void borrowABook(String bookId, String userName) {
+    public void borrowABook(String bookId, String userName) throws SQLException {
         try {
             DateTime today = new DateTime();
             DateTime returnDate = new DateTime().plusDays(7);
@@ -61,13 +61,15 @@ public class BorrowBookDao implements IBorrowBookDao {
             System.out.println(sql);
             DataSourceDatabase.sqlExecutionerForDML(sql);
             GlobalDataSource.getDataSource().getBookDao().decreaseQuantityOfBook(bookId, 1);
+            DataSourceDatabase.commitToDatabase();
         }
         catch (SQLIntegrityConstraintViolationException exception) {
+            DataSourceDatabase.rollbackUncommittedStatement();
             System.out.println("Book doesn't exist");
         }
         catch (SQLException exception) {
+            DataSourceDatabase.rollbackUncommittedStatement();
             System.out.println("SQL Error");
-            exception.printStackTrace();
         }
     }
 
@@ -77,11 +79,18 @@ public class BorrowBookDao implements IBorrowBookDao {
             boolean returned = false;
             for(var book : borrowedBooks) {
                 if(book.getBook().getId().equals(bookId)) {
-                    String sql = String.format("DELETE FROM borrowed_books WHERE user_id=%d AND book_id=%s",userId, Utility.getFormattedString(bookId));
-                    System.out.println(sql);
-                    DataSourceDatabase.sqlExecutionerForDML(sql);
-                    GlobalDataSource.getDataSource().getBookDao().increaseQuantityOfBook(bookId, 1);
-                    returned = true;
+                    try {
+                        String sql = String.format("DELETE FROM borrowed_books WHERE user_id=%d AND book_id=%s",userId, Utility.getFormattedString(bookId));
+                        System.out.println(sql);
+                        DataSourceDatabase.sqlExecutionerForDML(sql);
+                        GlobalDataSource.getDataSource().getBookDao().increaseQuantityOfBook(bookId, 1);
+                        DataSourceDatabase.commitToDatabase();
+                        returned = true;
+                    }
+                    catch (SQLException exception) {
+                        DataSourceDatabase.rollbackUncommittedStatement();
+                        System.out.println(exception.getMessage());
+                    }
                 }
             }
             if(!returned) {
