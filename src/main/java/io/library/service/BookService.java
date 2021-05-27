@@ -9,17 +9,29 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class BookService {
-    Scanner sc;
-    IBookDao bookDao;
+    private static Scanner sc = null;
+    private IBookDao bookDao;
+    public static BookService bookService = null;
 
-    public BookService() {
+    private BookService() {
         sc = new Scanner(System.in);
         bookDao = GlobalDataSource.getDataSource().getBookDao();
     }
 
-    public BookService(IBookDao bookDao) {
-        sc = new Scanner(System.in);
-        this.bookDao = bookDao;
+    public static BookService getInstance() {
+        if(bookService == null) {
+            bookService = new BookService();
+        }
+        return bookService;
+    }
+
+    // For Mocking purpose
+    protected static BookService getInstance(IBookDao bookDao) {
+        if(bookService == null) {
+            bookService = new BookService();
+        }
+        bookService.bookDao = bookDao;
+        return bookService;
     }
 
     private void printHeadings() {
@@ -198,7 +210,4 @@ public class BookService {
             }
         }
     }
-
-
-
 }

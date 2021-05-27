@@ -13,18 +13,30 @@ import java.util.Scanner;
 public class BorrowService {
     Scanner sc;
     User user;
+    private static BorrowService borrowService;
     IBorrowBookDao borrowBookDao;
 
-    public BorrowService() {
+    private BorrowService() {
         sc = new Scanner(System.in);
         user = LoggedInUser.getLoggedInUser();
         borrowBookDao = GlobalDataSource.getDataSource().getBorrowBookDao();
     }
 
-    public BorrowService(User user, IBorrowBookDao bookDao) {
-        sc = new Scanner(System.in);
-        this.user = user;
-        this.borrowBookDao = bookDao;
+    public static BorrowService getInstance() {
+        if(borrowService == null) {
+            borrowService = new BorrowService();
+        }
+        return borrowService;
+    }
+
+    // For Mocking purpose
+    public static BorrowService getInstance(User user, IBorrowBookDao borrowBookDao) {
+        if(borrowService == null) {
+            borrowService = new BorrowService();
+        }
+        borrowService.user = user;
+        borrowService.borrowBookDao = borrowBookDao;
+        return borrowService;
     }
 
     public void borrowABook() {

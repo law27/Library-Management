@@ -79,7 +79,10 @@ public class DataSourceDatabase implements IDataSource {
     }
 
     public static void closeDataBaseConnection() throws SQLException {
-        DataSourceDatabase.getInstance().closeConnection();
+        if(connector != null) {
+            DataSourceDatabase.getInstance().closeConnection();
+        }
+        System.out.println("Connection closed");
     }
 
 }

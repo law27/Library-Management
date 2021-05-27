@@ -27,13 +27,13 @@ public class AdminMenu implements IMenu {
             System.out.println();
             switch (userInput) {
                 case 1:
-                    new BookService().searchOptions();
+                    BookService.getInstance().searchOptions();
                     break;
                 case 2:
-                    new UserService().searchOptions();
+                    UserService.getInstance().searchOptions();
                     break;
                 case 3:
-                    new BookService().addBook();
+                    BookService.getInstance().addBook();
                     break;
                 case 4:
                     satisfied = true;

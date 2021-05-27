@@ -5,6 +5,7 @@ import io.library.auth.Authentication;
 import io.library.auth.LoggedInUser;
 import io.library.model.AccessLevel;
 import io.library.model.User;
+import io.library.service.Utility;
 
 import java.util.Scanner;
 
@@ -18,7 +19,7 @@ public class MainMenu implements IMenu {
 
     @Override
     public void show() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = Utility.getScanner();
         boolean satisfied = false;
         ILogin login;
 

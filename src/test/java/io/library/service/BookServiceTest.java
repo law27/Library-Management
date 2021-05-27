@@ -13,7 +13,7 @@ class BookServiceTest {
     BookService bookService;
 
     public BookServiceTest() {
-        bookService = new BookService(bookDao);
+        bookService = BookService.getInstance(bookDao);
     }
 
 

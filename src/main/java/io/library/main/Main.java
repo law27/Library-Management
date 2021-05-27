@@ -31,6 +31,7 @@ public class Main {
                 }
                 MainMenu menu = new MainMenu();
                 menu.show();
+                DataSourceDatabase.getInstance().closeConnection();
             }
             catch (FileNotFoundException exception) {
                 System.out.println(exception.getMessage());
@@ -38,5 +39,6 @@ public class Main {
             catch (Exception e) {
                 System.out.println("Some error occurred. Please Try Later");
             }
+            // Runtime.getRuntime().addShutdownHook(new Thread(() -> System.out.println("Hello World")));
     }
 }

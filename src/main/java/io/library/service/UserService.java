@@ -9,22 +9,35 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class UserService {
-    Scanner sc;
-    IUserDao userDao;
-    IBorrowBookDao borrowBookDao;
+    private static Scanner sc = null;
 
-    public UserService() {
-        sc = new Scanner(System.in);
+    private IUserDao userDao;
+    private IBorrowBookDao borrowBookDao;
+
+    private static UserService userService;
+
+    private UserService() {
+        sc = Utility.getScanner();
         userDao = GlobalDataSource.getDataSource().getUserDao();
         borrowBookDao = GlobalDataSource.getDataSource().getBorrowBookDao();
     }
 
-    public UserService(IUserDao userDao, IBorrowBookDao borrowBookDao) {
-        sc = new Scanner(System.in);
-        this.userDao = userDao;
-        this.borrowBookDao = borrowBookDao;
+    public static UserService getInstance() {
+        if(userService == null) {
+            userService = new UserService();
+        }
+        return userService;
     }
 
+    // For mocking purpose
+    protected static UserService getInstance(IUserDao userDao, IBorrowBookDao borrowBookDao) {
+        if(userService == null) {
+            userService = new UserService();
+        }
+        userService.userDao = userDao;
+        userService.borrowBookDao = borrowBookDao;
+        return userService;
+    }
 
     private void printUser(User user) {
         if(user == null) {
