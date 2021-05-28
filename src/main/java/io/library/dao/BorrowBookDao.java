@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class BorrowBookDao implements IBorrowBookDao {
 
@@ -66,36 +67,33 @@ public class BorrowBookDao implements IBorrowBookDao {
         }
         catch (SQLIntegrityConstraintViolationException exception) {
             DataSourceDatabase.rollbackUncommittedStatement();
-            System.out.println("Book doesn't exist");
+            throw new NoSuchElementException("There is no such book");
         }
         catch (SQLException exception) {
             DataSourceDatabase.rollbackUncommittedStatement();
-            System.out.println("SQL Error");
+            throw new SQLException("SQL can't be executed");
         }
     }
 
-    public void returnABook(String bookId, String userName) throws SQLException {
+    public void returnABook(String bookId, String userName) throws SQLException, IllegalStateException {
             int userId = GlobalDataSource.getDataSource().getUserDao().getUserId(userName);
             var borrowedBooks = getAllBorrowedBook(userName);
-            boolean returned = false;
+            if(borrowedBooks == null || borrowedBooks.isEmpty()) {
+                throw new IllegalStateException("No such borrowed book");
+            }
             for(var book : borrowedBooks) {
                 if(book.getBook().getId().equals(bookId)) {
                     try {
                         String sql = String.format("DELETE FROM borrowed_books WHERE user_id=%d AND book_id=%s",userId, Utility.getFormattedString(bookId));
-                        System.out.println(sql);
                         DataSourceDatabase.sqlExecutionerForDML(sql);
                         GlobalDataSource.getDataSource().getBookDao().increaseQuantityOfBook(bookId, 1);
                         DataSourceDatabase.commitToDatabase();
-                        returned = true;
                     }
                     catch (SQLException exception) {
                         DataSourceDatabase.rollbackUncommittedStatement();
-                        System.out.println(exception.getMessage());
+                        throw new SQLException(exception.getMessage());
                     }
                 }
-            }
-            if(!returned) {
-                throw new IllegalStateException("No such borrowed book");
             }
     }
 }

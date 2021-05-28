@@ -61,7 +61,7 @@ class BookDaoTest {
 
     @Test
     void checkGetBookByGenre() throws SQLException {
-        Book book = new Book(UUID.randomUUID().toString(), "js", "lawrance", 10, "computer");
+        Book book = new Book("js", "lawrance", 10, "computer");
         bookDao.addBook(book);
         List<Book> books = bookDao.getBookByGenre("computer");
         assertThat(books.size()).isEqualTo(1);

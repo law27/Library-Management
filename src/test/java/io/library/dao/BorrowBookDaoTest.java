@@ -128,7 +128,6 @@ class BorrowBookDaoTest {
 
         int quantityBeforeBorrow = bookDao.getBookById(testBook.getId()).getQuantity();
         borrowBookDao.borrowABook(testBook.getId(), testUser.getUserName());
-
         int quantityAfterBorrow = bookDao.getBookById(testBook.getId()).getQuantity();
         assertThat(quantityBeforeBorrow).isEqualTo(quantityAfterBorrow + 1);
 

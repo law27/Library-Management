@@ -3,9 +3,11 @@ package io.library.service;
 import io.library.dao.IBorrowBookDao;
 import io.library.dao.IUserDao;
 import io.library.datasource.GlobalDataSource;
+import io.library.model.BorrowedBook;
 import io.library.model.User;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserService {
@@ -52,31 +54,41 @@ public class UserService {
         }
     }
 
+    private User getUserByUserName(String userName) {
+        User user = null;
+        try {
+            user = userDao.getUser(userName);
+        }
+        catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return user;
+    }
+
     private void searchByName() {
         System.out.println("Enter user name");
         String userName = sc.nextLine();
+        var user = getUserByUserName(userName);
+        printUser(user);
+    }
+
+    private List<BorrowedBook> getAllBorrowedBooksOfUser(String userName) {
+        List<BorrowedBook> borrowedBookList = null;
         try {
-            var user = userDao.getUser(userName);
-            printUser(user);
+            borrowedBookList = borrowBookDao.getAllBorrowedBook(userName);
         }
         catch (SQLException exception) {
-            System.out.println("SQL Error");
-            exception.printStackTrace();
+            System.out.println(exception.getMessage());
         }
+        return borrowedBookList;
     }
 
     private void getAllBorrowTransactions() {
         System.out.println("Enter user name");
         String userName = sc.nextLine();
-        try {
-            var books = borrowBookDao.getAllBorrowedBook(userName);
-            BorrowService.getInstance().listBorrowedBooks(books);
-            System.out.println();
-        }
-        catch (SQLException exception) {
-            System.out.println("SQL Error");
-            exception.printStackTrace();
-        }
+        var books = getAllBorrowedBooksOfUser(userName);
+        BorrowService.getInstance().listBorrowedBooks(books);
+        System.out.println();
     }
 
     public void printOptions() {

@@ -8,6 +8,7 @@ import io.library.model.Book;
 
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class BookService {
@@ -46,39 +47,113 @@ public class BookService {
         return bookService;
     }
 
-    private void searchByAuthor() {
-        System.out.println("Enter author name: ");
-        String author = sc.nextLine();
+    private List<Book> getBookByAuthor(String name) {
+        List<Book> booksList = null;
         try {
-            var books = bookDao.getBookByAuthor(author);
-            if(books.isEmpty()) {
-                System.out.println("No Book available on given author name");
-            }
-            else {
-                System.out.println(HEADINGS);
-                for(Book book : books) {
-                    System.out.println(book);
-                }
-            }
+            booksList = bookDao.getBookByAuthor(name);
         }
         catch (SQLException exception) {
             System.out.println("SQL Error");
             exception.printStackTrace();
         }
+        return booksList;
+    }
+
+    private void searchByAuthor() {
+        System.out.println("Enter author name: ");
+        String author = sc.nextLine();
+        var books = getBookByAuthor(author);
+        if (books == null || books.isEmpty()) {
+            System.out.println("No Book available on given author name");
+        } else {
+            System.out.println(HEADINGS);
+            for (Book book : books) {
+                System.out.println(book);
+            }
+        }
+    }
+
+    private Book getBookByName(String bookName) {
+        Book book = null;
+        try {
+            book = bookDao.getBookByName(bookName);
+        }
+        catch (SQLException exception) {
+            System.out.println("SQL Exception");
+            exception.printStackTrace();
+        }
+        return book;
     }
 
     private void searchByBookName() {
         System.out.println("Enter book name");
         String bookName = sc.nextLine();
+        var book = getBookByName(bookName);
+        if(book == null) {
+            System.out.println("No Such Book");
+        }
+        else {
+            System.out.println(HEADINGS);
+            System.out.println(book);
+        }
+    }
+
+    private Book getBookById(String bookId) {
+        Book book = null;
         try {
-            var book = bookDao.getBookByName(bookName);
-            if(book == null) {
-                System.out.println("No Such Book");
-            }
-            else {
-                System.out.println(HEADINGS);
+            book = bookDao.getBookById(bookId);
+        }
+        catch (SQLException exception) {
+            System.out.println("SQL Exception");
+            exception.printStackTrace();
+        }
+        return book;
+    }
+
+    private void searchByBookId() {
+        System.out.println("Enter Id");
+        String id = sc.nextLine();
+        var book = getBookById(id);
+        if (book == null) {
+            System.out.println("No Such Book");
+        }
+        else {
+            System.out.println(HEADINGS);
+            System.out.println(book);
+        }
+    }
+
+    private List<Book> getBooksByGenre(String genre) {
+        List<Book> booksList = null;
+        try {
+            booksList = bookDao.getBookByGenre(genre);
+        }
+        catch (SQLException exception) {
+            System.out.println("SQL Error");
+            exception.printStackTrace();
+        }
+        return booksList;
+    }
+
+    private void searchByGenre() {
+        System.out.println("Enter genre");
+        String genre = sc.nextLine();
+        var books = getBooksByGenre(genre);
+        if(books == null || books.isEmpty()) {
+            System.out.println("No Book Available");
+        }
+        else {
+            System.out.println(HEADINGS);
+            for(var book : books) {
                 System.out.println(book);
             }
+        }
+    }
+
+    private void increaseQuantityOfABook(String bookId, int quantity) {
+        try {
+            bookDao.increaseQuantityOfBook(bookId, quantity);
+            DataSourceDatabase.commitToDatabase();
         }
         catch (SQLException exception) {
             System.out.println("SQL Exception");
@@ -86,43 +161,13 @@ public class BookService {
         }
     }
 
-    private void searchByBookId() {
-        System.out.println("Enter Id");
-        String id = sc.nextLine();
+    private void addNewBook(String bookName, String bookAuthor, int quantity, String genre) {
         try {
-            var book = bookDao.getBookById(id);
-            if (book == null) {
-                System.out.println("No Such Book");
-            }
-            else {
-                System.out.println(HEADINGS);
-                System.out.println(book);
-            }
+            Book book = new Book(bookName, bookAuthor, quantity, genre);
+            bookDao.addBook(book);
         }
         catch (SQLException exception) {
-            System.out.println("SQL Error");
-            exception.printStackTrace();
-        }
-
-    }
-
-    private void searchByGenre() {
-        System.out.println("Enter genre");
-        String genre = sc.nextLine();
-        try {
-            var books = bookDao.getBookByGenre(genre);
-            if(books.isEmpty()) {
-                System.out.println("No Book Available");
-            }
-            else {
-                System.out.println(HEADINGS);
-                for(var book : books) {
-                    System.out.println(book);
-                }
-            }
-        }
-        catch (SQLException exception) {
-            System.out.println("SQL Error");
+            System.out.println("SQL Exception");
             exception.printStackTrace();
         }
     }
@@ -147,7 +192,7 @@ public class BookService {
         System.out.println();
 
         System.out.print("Book Quantity: ");
-        int quantity  = sc.nextInt();
+        int quantity = sc.nextInt();
         sc.nextLine();
         System.out.println();
 
@@ -155,26 +200,17 @@ public class BookService {
         String genre = sc.nextLine().toLowerCase();
         System.out.println();
 
-        try {
-            Book checkBookIsAlreadyThere = bookDao.getBookByName(bookName);
-            if(checkBookIsAlreadyThere != null) {
-                System.out.println("The book is already there do you want to increase the quantity ?");
-                System.out.println("Type 'yes' or type anything to cancel");
-                String option = sc.nextLine();
-                if(option.equals("yes")) {
-                    bookDao.increaseQuantityOfBook(checkBookIsAlreadyThere.getId(), quantity);
-                    DataSourceDatabase.commitToDatabase();
-                }
-
+        Book checkBookIsAlreadyThere = getBookByName(bookName);
+        if (checkBookIsAlreadyThere != null) {
+            System.out.println("The book is already there do you want to increase the quantity ?");
+            System.out.println("Type 'yes' or type anything to cancel");
+            String option = sc.nextLine();
+            if (option.equals("yes")) {
+                increaseQuantityOfABook(checkBookIsAlreadyThere.getId(), quantity);
             }
-            else {
-                bookDao.addBook(new Book(bookName, bookAuthor, quantity, genre));
-                System.out.println();
-            }
-        }
-        catch (SQLException exception) {
-            System.out.println("SQL Error");
-            exception.printStackTrace();
+        } else {
+            addNewBook(bookName, bookAuthor, quantity, genre);
+            System.out.println();
         }
 
     }
