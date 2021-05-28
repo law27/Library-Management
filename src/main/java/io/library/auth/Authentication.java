@@ -33,7 +33,11 @@ public class Authentication {
             sc.nextLine();
             System.out.println();
             try {
-                if (!GlobalDataSource.getDataSource().getUserDao().checkUserNameAvailability(userName)) {
+                if (userName.equals("") || mobileNumber.equals("") || mobileNumber.startsWith("-")) {
+                    System.out.println("Fields can't be empty");
+                } else if (age < 0 || age > 110) {
+                    System.out.println("Enter a valid age");
+                } else if (!GlobalDataSource.getDataSource().getUserDao().checkUserNameAvailability(userName)) {
                     System.out.println("Username already taken. Try different one");
                 } else if (!(password.length() > 6)) {
                     System.out.println("Password length should consist more than 6 characters");
@@ -42,7 +46,6 @@ public class Authentication {
                     GlobalDataSource.getDataSource().getUserDao().addUser(user);
                     completed = true;
                 }
-
             } catch (SQLException exception) {
                 System.out.println("Error in SQL");
                 exception.printStackTrace();

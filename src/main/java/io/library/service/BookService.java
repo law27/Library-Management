@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class BookService {
     private static Scanner sc = null;
     private IBookDao bookDao;
-    public static BookService bookService = null;
+    private static BookService bookService = null;
     private final String HEADINGS = "Id\t\t\t\t\t\t\t\t\t\tBook Name\tAuthor\t\tQuantity\t\tGenre\n" +
                                     "==\t\t\t\t\t\t\t\t\t\t=========\t======\t\t========\t\t=====";
 
@@ -182,6 +182,10 @@ public class BookService {
         System.out.println("5. Main Menu");
     }
 
+    public int getQuantityOfBook(String bookId) throws SQLException {
+        return bookDao.getBookById(bookId).getQuantity();
+    }
+
     public void addBook() {
         System.out.println("Enter Book details");
 
@@ -201,18 +205,25 @@ public class BookService {
         System.out.println("Enter Genre: ");
         String genre = sc.nextLine().toLowerCase();
         System.out.println();
-
-        Book checkBookIsAlreadyThere = getBookByName(bookName);
-        if (checkBookIsAlreadyThere != null) {
-            System.out.println("The book is already there do you want to increase the quantity ?");
-            System.out.println("Type 'yes' or type anything to cancel");
-            String option = sc.nextLine();
-            if (option.equals("yes")) {
-                increaseQuantityOfABook(checkBookIsAlreadyThere.getId(), quantity);
+        if (bookName.equals("") || bookAuthor.equals("") || genre.equals("")) {
+            System.out.println("None of the field can be empty");
+        }
+        else if(quantity <= 0) {
+            System.out.println("Book quantity should be more than 0");
+        }
+        else {
+            Book checkBookIsAlreadyThere = getBookByName(bookName);
+            if (checkBookIsAlreadyThere != null) {
+                System.out.println("The book is already there do you want to increase the quantity ?");
+                System.out.println("Type 'yes' or type anything to cancel");
+                String option = sc.nextLine();
+                if (option.equals("yes")) {
+                    increaseQuantityOfABook(checkBookIsAlreadyThere.getId(), quantity);
+                }
+            } else {
+                addNewBook(bookName, bookAuthor, quantity, genre);
+                System.out.println();
             }
-        } else {
-            addNewBook(bookName, bookAuthor, quantity, genre);
-            System.out.println();
         }
 
     }

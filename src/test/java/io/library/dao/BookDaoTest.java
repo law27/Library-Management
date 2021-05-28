@@ -58,6 +58,20 @@ class BookDaoTest {
         assertThat(expected).isEqualToComparingFieldByField(testBook);
     }
 
+    @Test
+    void checkDuplicateEntryThrowsException() {
+        Book testBook = new Book("python", "lawrance", 10, "computer");
+        assertThatExceptionOfType(SQLException.class).isThrownBy( () -> {
+            bookDao.addBook(testBook);
+            bookDao.addBook(testBook);
+        });
+    }
+
+    @Test
+    void checkGetBookByGenreWhenNoDataInDB() throws SQLException {
+        List<Book> books = bookDao.getBookByGenre("computer");
+        assertThat(books.isEmpty()).isTrue();
+    }
 
     @Test
     void checkGetBookByGenre() throws SQLException {
@@ -70,7 +84,7 @@ class BookDaoTest {
 
     @Test
     void checkGetBookByAuthor() throws SQLException {
-        Book book = new Book(UUID.randomUUID().toString(), "js", "lawrance", 10, "computer");
+        Book book = new Book("js", "lawrance", 10, "computer");
         bookDao.addBook(book);
         List<Book> books = bookDao.getBookByAuthor("lawrance");
         assertThat(books.size()).isEqualTo(1);
@@ -79,7 +93,7 @@ class BookDaoTest {
 
     @Test
     void checkGetBookByName() throws SQLException {
-        Book book = new Book(UUID.randomUUID().toString(), "js", "lawrance", 10, "computer");
+        Book book = new Book("js", "lawrance", 10, "computer");
         bookDao.addBook(book);
         Book expected = bookDao.getBookByName("js");
         assertThat(expected).isEqualToComparingFieldByField(book);

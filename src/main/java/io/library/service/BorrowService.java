@@ -68,7 +68,14 @@ public class BorrowService {
     private boolean borrowABook(String bookId, String userName) {
         boolean isSuccess = true;
         try {
-            borrowBookDao.borrowABook(bookId, userName);
+            int bookQuantity = BookService.getInstance().getQuantityOfBook(bookId);
+            if(bookQuantity == 0) {
+                System.out.println("No stock is left. Please come again later");
+                isSuccess = false;
+            }
+            else {
+                borrowBookDao.borrowABook(bookId, userName);
+            }
         } catch (SQLException | NoSuchElementException exception) {
             isSuccess = false;
             System.out.println(exception.getMessage());
