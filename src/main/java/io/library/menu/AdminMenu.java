@@ -25,6 +25,7 @@ public class AdminMenu implements IMenu {
             printOptions();
             System.out.print("Enter your option:  ");
             int userInput = sc.nextInt();
+            sc.nextLine();
             System.out.println();
             switch (userInput) {
                 case 1:

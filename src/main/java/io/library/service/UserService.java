@@ -13,6 +13,8 @@ public class UserService {
 
     private IUserDao userDao;
     private IBorrowBookDao borrowBookDao;
+    private final String HEADINGS = "Username\t\tMobile Number\t\t\tAge\n" +
+                                    "====\t\t\t========\t\t\t============";
 
     private static UserService userService;
 
@@ -44,13 +46,8 @@ public class UserService {
             System.out.println("User doesn't exist");
         }
         else {
-            System.out.println("Username\t\tMobile Number\t\t\tAge");
-            System.out.println("====\t\t\t========\t\t\t============");
-            System.out.printf("%s\t\t%s\t\t\t\t%s",
-                    user.getUserName(),
-                    user.getMobileNumber(),
-                    user.getAge()
-            );
+            System.out.println(HEADINGS);
+            System.out.println(user);
             System.out.println();
         }
     }
@@ -73,7 +70,7 @@ public class UserService {
         String userName = sc.nextLine();
         try {
             var books = borrowBookDao.getAllBorrowedBook(userName);
-            BorrowService.listBorrowedBooks(books);
+            BorrowService.getInstance().listBorrowedBooks(books);
             System.out.println();
         }
         catch (SQLException exception) {

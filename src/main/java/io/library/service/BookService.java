@@ -2,6 +2,7 @@ package io.library.service;
 
 
 import io.library.dao.IBookDao;
+import io.library.datasource.DataSourceDatabase;
 import io.library.datasource.GlobalDataSource;
 import io.library.model.Book;
 
@@ -13,6 +14,8 @@ public class BookService {
     private static Scanner sc = null;
     private IBookDao bookDao;
     public static BookService bookService = null;
+    private final String HEADINGS = "Id\t\t\t\t\t\t\t\t\t\tBook Name\tAuthor\t\tQuantity\t\tGenre\n" +
+                                    "==\t\t\t\t\t\t\t\t\t\t=========\t======\t\t========\t\t=====";
 
     private BookService() {
         sc = Utility.getScanner();
@@ -43,15 +46,6 @@ public class BookService {
         return bookService;
     }
 
-    private void printHeadings() {
-        System.out.println("Id\t\t\t\t\t\t\t\t\t\tBook Name\tAuthor\t\tQuantity\t\tGenre");
-        System.out.println("==\t\t\t\t\t\t\t\t\t\t=========\t======\t\t========\t\t=====");
-    }
-
-    private void printBook(Book book) {
-        System.out.printf("%s\t%s\t\t%s\t%d\t\t\t%s\n", book.getId(), book.getBookName(), book.getAuthor(), book.getQuantity(), book.getGenre());
-    }
-
     private void searchByAuthor() {
         System.out.println("Enter author name: ");
         String author = sc.nextLine();
@@ -61,9 +55,9 @@ public class BookService {
                 System.out.println("No Book available on given author name");
             }
             else {
-                printHeadings();
+                System.out.println(HEADINGS);
                 for(Book book : books) {
-                    printBook(book);
+                    System.out.println(book);
                 }
             }
         }
@@ -82,8 +76,8 @@ public class BookService {
                 System.out.println("No Such Book");
             }
             else {
-                printHeadings();
-                printBook(book);
+                System.out.println(HEADINGS);
+                System.out.println(book);
             }
         }
         catch (SQLException exception) {
@@ -101,8 +95,8 @@ public class BookService {
                 System.out.println("No Such Book");
             }
             else {
-                printHeadings();
-                printBook(book);
+                System.out.println(HEADINGS);
+                System.out.println(book);
             }
         }
         catch (SQLException exception) {
@@ -121,9 +115,9 @@ public class BookService {
                 System.out.println("No Book Available");
             }
             else {
-                printHeadings();
+                System.out.println(HEADINGS);
                 for(var book : books) {
-                    this.printBook(book);
+                    System.out.println(book);
                 }
             }
         }
@@ -169,6 +163,7 @@ public class BookService {
                 String option = sc.nextLine();
                 if(option.equals("yes")) {
                     bookDao.increaseQuantityOfBook(checkBookIsAlreadyThere.getId(), quantity);
+                    DataSourceDatabase.commitToDatabase();
                 }
 
             }

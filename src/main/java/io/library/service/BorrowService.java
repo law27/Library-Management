@@ -18,6 +18,9 @@ public class BorrowService {
 
     private static BorrowService borrowService;
 
+    private final String HEADINGS = "Name\t\t\tBookName\t\t\tBorrowedDate\t\t\tReturnDate\n" +
+                                    "====\t\t\t========\t\t\t============\t\t\t==========";
+
     private BorrowService() {
         sc = Utility.getScanner();
         user = LoggedInUser.getLoggedInUser();
@@ -59,25 +62,14 @@ public class BorrowService {
         }
     }
 
-    private static void printHeadings() {
-        System.out.println("Name\t\t\tBookName\t\t\tBorrowedDate\t\t\tReturnDate");
-        System.out.println("====\t\t\t========\t\t\t============\t\t\t==========");
-    }
-
-    public static void listBorrowedBooks(List<BorrowedBook> books) {
-        if(books.isEmpty()) {
+    public void listBorrowedBooks(List<BorrowedBook> books) {
+        if (books.isEmpty()) {
             System.out.println("Haven't borrowed any books");
-        }
-        else {
-            printHeadings();
+        } else {
+            System.out.println(HEADINGS);
+            int i = 1;
             for (BorrowedBook book : books) {
-                System.out.printf("%s\t\t%s\t\t\t\t%s\t\t\t%s",
-                        book.getUserName(),
-                        book.getBook().getBookName(),
-                        book.getBorrowedDate(),
-                        book.getReturnDate()
-                );
-                System.out.println();
+                System.out.println(i++ + ". "+ book);
             }
         }
     }
