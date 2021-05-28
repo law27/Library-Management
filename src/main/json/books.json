@@ -1,6 +1,6 @@
 [
     {
-        "quantity": 10,
+        "quantity": 9,
         "genre": "computer",
         "book_author": "lawrance",
         "id": "61d0146c-65d5-4241-be23-7b68f631d61f",
@@ -42,14 +42,14 @@
         "book_name": "vim"
     },
     {
-        "quantity": 13,
+        "quantity": 15,
         "genre": "computer",
         "book_author": "lawrance",
         "id": "d37b1247-488c-4f1b-beb0-b3831fdc34d7",
         "book_name": "gtk-3"
     },
     {
-        "quantity": 10,
+        "quantity": 22,
         "genre": "computer",
         "book_author": "lawrance",
         "id": "2bba4549-7da4-44de-a5da-904514c77f00",

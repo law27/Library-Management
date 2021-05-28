@@ -153,7 +153,9 @@ public class BookService {
     private void increaseQuantityOfABook(String bookId, int quantity) {
         try {
             bookDao.increaseQuantityOfBook(bookId, quantity);
-            DataSourceDatabase.commitToDatabase();
+            if(GlobalDataSource.getDataSource() instanceof DataSourceDatabase) {
+                DataSourceDatabase.commitToDatabase();
+            }
         }
         catch (SQLException exception) {
             System.out.println("SQL Exception");
