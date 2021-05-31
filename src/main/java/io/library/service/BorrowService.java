@@ -9,7 +9,6 @@ import io.library.model.User;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class BorrowService {
@@ -54,33 +53,28 @@ public class BorrowService {
         return borrowService;
     }
 
-    private boolean returnTheBook(String bookId) {
-        boolean isSuccess = true;
+    private void returnTheBook(String bookId) {
         try {
             borrowBookDao.returnABook(bookId, user.getUserName());
-        } catch (SQLException | IllegalStateException exception) {
-            isSuccess = false;
+        }
+        catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
-        return isSuccess;
+
     }
 
-    private boolean borrowABook(String bookId, String userName) {
-        boolean isSuccess = true;
+    private void borrowABook(String bookId, String userName) {
         try {
             int bookQuantity = BookService.getInstance().getQuantityOfBook(bookId);
-            if(bookQuantity == 0) {
+            if (bookQuantity == 0) {
                 System.out.println("No stock is left. Please come again later");
-                isSuccess = false;
-            }
-            else {
+            } else {
                 borrowBookDao.borrowABook(bookId, userName);
             }
-        } catch (SQLException | NoSuchElementException exception) {
-            isSuccess = false;
+        }
+        catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
-        return isSuccess;
     }
 
     private int getNumberOfBorrowedBookOfUser(String userName) {
@@ -115,11 +109,8 @@ public class BorrowService {
             System.out.println("You've exceeded the amount of book you can borrow. Return a book before borrowing another book");
             return;
         }
-        if (borrowABook(bookId, user.getUserName())) {
-            System.out.println("Book borrowed successfully");
-        } else {
-            System.out.println("Some error occurred. Please try Later");
-        }
+        borrowABook(bookId, user.getUserName());
+        System.out.println("Book borrowed successfully");
     }
 
     public void listBorrowedBooks(List<BorrowedBook> books) {
@@ -144,20 +135,25 @@ public class BorrowService {
     public void returnABorrowedBook() {
         var books = getAllBorrowedBook(user.getUserName());
         boolean satisfied = false;
-        boolean isSuccess;
         while (!satisfied) {
             listBorrowedBooks(books);
             if (!books.isEmpty()) {
                 System.out.print("Select a book to return ");
-                int option = sc.nextInt();
+                int option;
+                try {
+                    option = sc.nextInt();
+                }
+                catch (Exception exception) {
+                    sc.nextLine();
+                    System.out.println("Option should be a number");
+                    continue;
+                }
                 System.out.println();
                 if (option <= 0 || option > books.size()) {
                     System.out.println("Invalid option try Again");
                 } else {
-                    isSuccess =  returnTheBook(books.get(option - 1).getBook().getId());
-                    if(isSuccess) {
-                        System.out.println("Returned Successfully");
-                    }
+                    returnTheBook(books.get(option - 1).getBook().getId());
+                    System.out.println("Returned Successfully");
                     satisfied = true;
                 }
             } else {

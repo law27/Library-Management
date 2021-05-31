@@ -23,8 +23,17 @@ public class AdminMenu implements IMenu {
 
         while (!satisfied) {
             printOptions();
-            System.out.print("Enter your option:  ");
-            int userInput = sc.nextInt();
+            System.out.print("Enter your option:   ");
+            int userInput;
+            try {
+                userInput = sc.nextInt();
+            }
+            catch (Exception exception) {
+                sc.nextLine();
+                System.out.println("Enter a valid Number");
+                System.out.println();
+                continue;
+            }
             sc.nextLine();
             System.out.println();
             switch (userInput) {

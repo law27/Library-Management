@@ -27,7 +27,16 @@ public class MainMenu implements IMenu {
         while (!satisfied) {
             printOptions();
             System.out.print("Enter your option:   ");
-            int userInput = sc.nextInt();
+            int userInput;
+            try {
+                userInput = sc.nextInt();
+            }
+            catch (Exception exception) {
+                sc.nextLine();
+                System.out.println("Enter a valid Number");
+                System.out.println();
+                continue;
+            }
             System.out.println();
             sc.nextLine();
             switch (userInput) {

@@ -48,7 +48,7 @@ public class BorrowBookDao implements IBorrowBookDao {
         return getAllBorrowedBook(userName).size();
     }
 
-    public void borrowABook(String bookId, String userName) throws SQLException {
+    public void borrowABook(String bookId, String userName) {
         try {
             DateTime today = new DateTime();
             DateTime returnDate = new DateTime().plusDays(7);
@@ -65,35 +65,38 @@ public class BorrowBookDao implements IBorrowBookDao {
             GlobalDataSource.getDataSource().getBookDao().decreaseQuantityOfBook(bookId, 1);
             DataSourceDatabase.commitToDatabase();
         }
-        catch (SQLIntegrityConstraintViolationException exception) {
-            DataSourceDatabase.rollbackUncommittedStatement();
-            throw new NoSuchElementException("There is no such book");
-        }
         catch (SQLException exception) {
-            DataSourceDatabase.rollbackUncommittedStatement();
-            throw new SQLException("SQL can't be executed");
+            try {
+                DataSourceDatabase.rollbackUncommittedStatement();
+            }
+            catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
-    public void returnABook(String bookId, String userName) throws SQLException, IllegalStateException {
+    public void returnABook(String bookId, String userName) {
+        try {
             int userId = GlobalDataSource.getDataSource().getUserDao().getUserId(userName);
             var borrowedBooks = getAllBorrowedBook(userName);
-            if(borrowedBooks == null || borrowedBooks.isEmpty()) {
+            if (borrowedBooks == null || borrowedBooks.isEmpty()) {
                 throw new IllegalStateException("No such borrowed book");
             }
-            for(var book : borrowedBooks) {
-                if(book.getBook().getId().equals(bookId)) {
-                    try {
-                        String sql = String.format("DELETE FROM borrowed_books WHERE user_id=%d AND book_id=%s",userId, Utility.getFormattedString(bookId));
-                        DataSourceDatabase.sqlExecutionerForDML(sql);
-                        GlobalDataSource.getDataSource().getBookDao().increaseQuantityOfBook(bookId, 1);
-                        DataSourceDatabase.commitToDatabase();
-                    }
-                    catch (SQLException exception) {
-                        DataSourceDatabase.rollbackUncommittedStatement();
-                        throw new SQLException(exception.getMessage());
-                    }
+            for (var book : borrowedBooks) {
+                if (book.getBook().getId().equals(bookId)) {
+                    String sql = String.format("DELETE FROM borrowed_books WHERE user_id=%d AND book_id=%s", userId, Utility.getFormattedString(bookId));
+                    DataSourceDatabase.sqlExecutionerForDML(sql);
+                    GlobalDataSource.getDataSource().getBookDao().increaseQuantityOfBook(bookId, 1);
+                    DataSourceDatabase.commitToDatabase();
                 }
             }
+        } catch (SQLException exception) {
+            try {
+                System.out.println(exception.getMessage());
+                DataSourceDatabase.rollbackUncommittedStatement();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 }

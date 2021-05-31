@@ -198,7 +198,15 @@ public class BookService {
         System.out.println();
 
         System.out.print("Book Quantity: ");
-        int quantity = sc.nextInt();
+        int quantity;
+        try {
+            quantity = sc.nextInt();
+        }
+        catch (Exception exception) {
+            sc.nextLine();
+            System.out.println("Quantity should be of number");
+            return;
+        }
         sc.nextLine();
         System.out.println();
 
@@ -234,7 +242,16 @@ public class BookService {
         while (!satisfied) {
             printOptions();
             System.out.print("Enter your option:   ");
-            int userInput = sc.nextInt();
+            int userInput;
+            try {
+                userInput = sc.nextInt();
+            }
+            catch (Exception exception) {
+                sc.nextLine();
+                System.out.println("Enter a valid Number");
+                System.out.println();
+                continue;
+            }
             sc.nextLine();
             System.out.println();
             switch (userInput) {
