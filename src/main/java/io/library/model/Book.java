@@ -56,4 +56,9 @@ public class Book {
     public String getGenre() {
         return genre;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s\t%s\t\t%s\t%d\t\t\t%s\n", id, bookName, author, quantity, genre);
+    }
 }

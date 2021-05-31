@@ -19,13 +19,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BorrowBookDaoTest {
 
-    private static BookDao bookDao;
-    private static BorrowBookDao borrowBookDao;
-    private static User user;
-    private static Book book;
+    private final BookDao bookDao;
+    private final BorrowBookDao borrowBookDao;
+    private final UserDao userDao;
+
+    public BorrowBookDaoTest() {
+        this.bookDao = new BookDao();
+        this.borrowBookDao = new BorrowBookDao();
+        this.userDao = new UserDao();
+    }
 
     @BeforeAll
-    static void createConnection() throws SQLException {
+    static void createConnection() {
         String fileName = "application.properties";
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Properties properties = new Properties();
@@ -36,13 +41,13 @@ class BorrowBookDaoTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        UserDao userDao = new UserDao();
-        bookDao = new BookDao();
-        borrowBookDao = new BorrowBookDao();
-        user = new User("test", "test123", "6369399387", 21, AccessLevel.USER, new UserMenu());
-        book = new Book("js", "lawrance", 10, "computer");
-        userDao.addUser(user);
-        bookDao.addBook(book);
+        /*
+                String userDelete = "DELETE FROM users";
+                String bookDelete = "DELETE FROM books";
+                DataSourceDatabase.sqlExecutionerForDML(userDelete);
+                DataSourceDatabase.sqlExecutionerForDML(bookDelete);
+                DataSourceDatabase.commitToDatabase();
+        */
     }
 
     @AfterAll
@@ -51,65 +56,98 @@ class BorrowBookDaoTest {
         String bookDelete = "DELETE FROM books";
         DataSourceDatabase.sqlExecutionerForDML(userDelete);
         DataSourceDatabase.sqlExecutionerForDML(bookDelete);
+        DataSourceDatabase.commitToDatabase();
         DataSourceDatabase.closeDataBaseConnection();
     }
 
     @AfterEach
     void tearDown() throws SQLException {
-        try {
-            borrowBookDao.returnABook(book.getId(), user.getUserName());
-        }
-        catch (IllegalStateException exception) {
-            System.out.println("No Need to return");
-        }
-        String borrowedDelete = "DELETE FROM borrowed_books";
-        DataSourceDatabase.sqlExecutionerForDML(borrowedDelete);
+        String userDelete = "DELETE FROM users";
+        String bookDelete = "DELETE FROM books";
+        DataSourceDatabase.sqlExecutionerForDML(userDelete);
+        DataSourceDatabase.sqlExecutionerForDML(bookDelete);
+        DataSourceDatabase.commitToDatabase();
     }
 
     @Test
     void checkBorrowABook() throws SQLException {
-        borrowBookDao.borrowABook(book.getId(), user.getUserName());
-        List<BorrowedBook> borrowedBooks = borrowBookDao.getAllBorrowedBook(user.getUserName());
+        User testUser = new User("test", "test123", "6369399387", 21, AccessLevel.USER, new UserMenu());
+        Book testBook = new Book("js", "lawrance", 10, "computer");
+        userDao.addUser(testUser);
+        bookDao.addBook(testBook);
+
+        borrowBookDao.borrowABook(testBook.getId(), testUser.getUserName());
+
+        List<BorrowedBook> borrowedBooks = borrowBookDao.getAllBorrowedBook(testUser.getUserName());
         Condition<BorrowedBook> condition = new Condition<>( (BorrowedBook borrowedBook) -> (
-                borrowedBook.getBook().getId().equals(book.getId()) &&
-                borrowedBook.getUserName().equals(user.getUserName())
+                borrowedBook.getBook().getId().equals(testBook.getId()) &&
+                borrowedBook.getUserName().equals(testUser.getUserName())
                 ), "Check whether borrowed book is correct as we expect");
+
         assertThat(borrowedBooks.get(0)).has(condition);
+        borrowBookDao.returnABook(testBook.getId(), testUser.getUserName());
     }
 
     @Test
     void checkNumberOfBorrowedBooks() throws SQLException {
-        borrowBookDao.borrowABook(book.getId(), user.getUserName());
-        int noOfBooks = borrowBookDao.numberOfBookBorrowed(user.getUserName());
+        User testUser = new User("test", "test123", "6369399387", 21, AccessLevel.USER, new UserMenu());
+        Book testBook = new Book("js", "lawrance", 10, "computer");
+        userDao.addUser(testUser);
+        bookDao.addBook(testBook);
+
+        borrowBookDao.borrowABook(testBook.getId(), testUser.getUserName());
+
+        int noOfBooks = borrowBookDao.numberOfBookBorrowed(testUser.getUserName());
+
         assertThat(noOfBooks).isEqualTo(1);
+        borrowBookDao.returnABook(testBook.getId(), testUser.getUserName());
     }
 
     @Test
     void checkReturnBook() throws SQLException {
-        borrowBookDao.borrowABook(book.getId(), user.getUserName());
-        int beforeReturn = borrowBookDao.numberOfBookBorrowed(user.getUserName());
-        borrowBookDao.returnABook(book.getId(), user.getUserName());
-        int afterReturn = borrowBookDao.numberOfBookBorrowed(user.getUserName());
+        User testUser = new User("test", "test123", "6369399387", 21, AccessLevel.USER, new UserMenu());
+        Book testBook = new Book("js", "lawrance", 10, "computer");
+        userDao.addUser(testUser);
+        bookDao.addBook(testBook);
+
+        borrowBookDao.borrowABook(testBook.getId(), testUser.getUserName());
+
+        int beforeReturn = borrowBookDao.numberOfBookBorrowed(testUser.getUserName());
+        borrowBookDao.returnABook(testBook.getId(), testUser.getUserName());
+
+        int afterReturn = borrowBookDao.numberOfBookBorrowed(testUser.getUserName());
         assertThat(afterReturn).isLessThan(beforeReturn);
     }
 
     @Test
     void checkBorrowBookDecreasesBookCount() throws SQLException {
-        int quantityBeforeBorrow = bookDao.getBookById(book.getId()).getQuantity();
-        borrowBookDao.borrowABook(book.getId(), user.getUserName());
-        int quantityAfterBorrow = bookDao.getBookById(book.getId()).getQuantity();
+        User testUser = new User("test", "test123", "6369399387", 21, AccessLevel.USER, new UserMenu());
+        Book testBook = new Book("js", "lawrance", 10, "computer");
+        userDao.addUser(testUser);
+        bookDao.addBook(testBook);
+
+        int quantityBeforeBorrow = bookDao.getBookById(testBook.getId()).getQuantity();
+        borrowBookDao.borrowABook(testBook.getId(), testUser.getUserName());
+        int quantityAfterBorrow = bookDao.getBookById(testBook.getId()).getQuantity();
         assertThat(quantityBeforeBorrow).isEqualTo(quantityAfterBorrow + 1);
+
+        borrowBookDao.returnABook(testBook.getId(), testUser.getUserName());
     }
 
     @Test
     void checkReturnBookIncreasesBookCount() throws SQLException {
-        borrowBookDao.borrowABook(book.getId(), user.getUserName());
-        int quantityBeforeReturn = bookDao.getBookById(book.getId()).getQuantity();
-        borrowBookDao.returnABook(book.getId(), user.getUserName());
-        int quantityAfterReturn = bookDao.getBookById(book.getId()).getQuantity();
+        User testUser = new User("test", "test123", "6369399387", 21, AccessLevel.USER, new UserMenu());
+        Book testBook = new Book("js", "lawrance", 10, "computer");
+        userDao.addUser(testUser);
+        bookDao.addBook(testBook);
+
+        borrowBookDao.borrowABook(testBook.getId(), testUser.getUserName());
+        int quantityBeforeReturn = bookDao.getBookById(testBook.getId()).getQuantity();
+
+        borrowBookDao.returnABook(testBook.getId(), testUser.getUserName());
+        int quantityAfterReturn = bookDao.getBookById(testBook.getId()).getQuantity();
+
         assertThat(quantityBeforeReturn).isEqualTo(quantityAfterReturn - 1);
     }
-
-
 
 }

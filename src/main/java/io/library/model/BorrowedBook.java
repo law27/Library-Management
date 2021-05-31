@@ -44,4 +44,14 @@ public class BorrowedBook {
     public void setReturnDate(String returnDate) {
         this.returnDate = returnDate;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s\t\t%s\t\t\t\t%s\t\t\t%s",
+                userName,
+                book.getBookName(),
+                borrowedDate,
+                returnDate
+        );
+    }
 }

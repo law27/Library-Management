@@ -4,8 +4,10 @@ import io.library.datasource.DataSourceDatabase;
 import io.library.datasource.DataSourceJSON;
 import io.library.datasource.GlobalDataSource;
 import io.library.menu.MainMenu;
+import io.library.service.Utility;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -28,11 +30,18 @@ public class Main {
                     DataSourceDatabase.getInstance().createConnection(properties);
                     GlobalDataSource.setDataSource(DataSourceDatabase.getInstance());
                 }
+                MainMenu menu = new MainMenu();
+                menu.show();
+                Utility.closeScanner();
+                DataSourceDatabase.closeDataBaseConnection();
+            }
+            catch (FileNotFoundException exception) {
+                System.out.println(exception.getMessage());
             }
             catch (Exception e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
+                System.out.println("Some error occurred. Please Try Later");
             }
-            MainMenu menu = new MainMenu();
-            menu.show();
+            // Runtime.getRuntime().addShutdownHook(new Thread(() -> System.out.println("Hello World")));
     }
 }

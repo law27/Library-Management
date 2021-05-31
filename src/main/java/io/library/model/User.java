@@ -80,4 +80,13 @@ public class User {
     public void setMenu(IMenu menu) {
         this.menu = menu;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s\t\t%s\t\t\t\t%s",
+                userName,
+                mobileNumber,
+                age
+        );
+    }
 }

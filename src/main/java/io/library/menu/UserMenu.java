@@ -2,6 +2,7 @@ package io.library.menu;
 
 import io.library.service.BookService;
 import io.library.service.BorrowService;
+import io.library.service.Utility;
 
 import java.util.Scanner;
 
@@ -18,26 +19,27 @@ public class UserMenu implements IMenu {
 
     @Override
     public void show() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = Utility.getScanner();
         boolean satisfied = false;
 
         while (!satisfied) {
             printOptions();
             System.out.print("Enter your option:   ");
             int userInput = sc.nextInt();
+            sc.nextLine();
             System.out.println();
             switch (userInput) {
                 case 1:
-                    new BookService().searchOptions();
+                    BookService.getInstance().searchOptions();
                     break;
                 case 2:
-                    new BorrowService().borrowABook();
+                    BorrowService.getInstance().borrowABook();
                     break;
                 case 3:
-                    new BorrowService().listBorrowedBooks();
+                    BorrowService.getInstance().listBorrowedBooks();
                     break;
                 case 4:
-                    new BorrowService().returnABorrowedBook();
+                    BorrowService.getInstance().returnABorrowedBook();
                     break;
                 case 5:
                     satisfied = true;

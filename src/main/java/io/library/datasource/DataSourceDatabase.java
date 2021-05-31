@@ -40,17 +40,14 @@ public class DataSourceDatabase implements IDataSource {
         return borrowBookDao;
     }
 
-    public void createConnection(Properties properties) {
-        try {
+    public void createConnection(Properties properties) throws SQLException, ClassNotFoundException {
             String jdbcDriver = properties.getProperty("jdbc-driver");
             String dbURL = properties.getProperty("db-url");
             String username = properties.getProperty("username");
             String password = properties.getProperty("password");
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbURL, username, password);
-        } catch (ClassNotFoundException | SQLException exception) {
-            exception.printStackTrace();
-        }
+            connection.setAutoCommit(false);
     }
 
     public Statement getExecutionStatement() {
@@ -64,6 +61,10 @@ public class DataSourceDatabase implements IDataSource {
         return statement;
     }
 
+    public void commit() throws SQLException {
+        connection.commit();
+    }
+
     public static ResultSet sqlExecutionerForSelect(String sql) throws SQLException {
         Statement statement = DataSourceDatabase.getInstance().getExecutionStatement();
         return statement.executeQuery(sql);
@@ -74,12 +75,37 @@ public class DataSourceDatabase implements IDataSource {
         statement.execute(sql);
     }
 
-    public void closeConnection() throws SQLException {
+    private void closeConnection() throws SQLException {
         connection.close();
     }
 
+    private void rollback() throws SQLException {
+        connection.rollback();
+    }
+
     public static void closeDataBaseConnection() throws SQLException {
-        DataSourceDatabase.getInstance().closeConnection();
+        if(connector != null) {
+            DataSourceDatabase.getInstance().closeConnection();
+        }
+        System.out.println("Connection closed");
+    }
+
+    public static void commitToDatabase() throws SQLException {
+        if(connector != null) {
+            connector.commit();
+        }
+        else {
+            System.out.println("Database connection is not resolved");
+        }
+    }
+
+    public static void rollbackUncommittedStatement() throws SQLException {
+        if(connector != null) {
+            connector.rollback();
+        }
+        else {
+            System.out.println("Database connection is not resolved");
+        }
     }
 
 }

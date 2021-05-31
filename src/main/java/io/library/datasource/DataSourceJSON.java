@@ -14,6 +14,9 @@ public class DataSourceJSON implements IDataSource {
     private File books;
     private File users;
     private File borrow;
+    private JSONArray userJsonArray = null;
+    private JSONArray borrowJsonArray = null;
+    private JSONArray bookJsonArray = null;
 
     private DataSourceJSON() {
         this.userDao = new UserDaoJSON();
@@ -36,10 +39,15 @@ public class DataSourceJSON implements IDataSource {
         return borrowBookDao;
     }
 
-    public void createConnection(File books, File users, File borrow) {
-        this.books = books;
-        this.users = users;
-        this.borrow = borrow;
+    public void createConnection(File books, File users, File borrow) throws FileNotFoundException {
+        if(books.exists() && users.exists() && borrow.exists()) {
+            this.books = books;
+            this.users = users;
+            this.borrow = borrow;
+        }
+        else {
+            throw new FileNotFoundException("Required files not found");
+        }
     }
 
     public synchronized static DataSourceJSON getInstance() {
@@ -51,8 +59,7 @@ public class DataSourceJSON implements IDataSource {
 
     private synchronized String readFromFile(File file) {
         String result = null;
-        try {
-            InputStream inputStream = new FileInputStream(file);
+        try(InputStream inputStream = new FileInputStream(file)) {
             result = new String(inputStream.readAllBytes());
         }
         catch (IOException exception) {
@@ -62,12 +69,9 @@ public class DataSourceJSON implements IDataSource {
     }
 
     private synchronized void writeToFile(JSONArray array, File file) {
-        try {
-            FileWriter fileWriter = new FileWriter(file);
-            BufferedWriter writer = new BufferedWriter(fileWriter);
+        try(FileWriter fileWriter = new FileWriter(file);
+            BufferedWriter writer = new BufferedWriter(fileWriter) ) {
             writer.write(array.toString(4));
-            writer.flush();
-            fileWriter.close();
         }
         catch (Exception exception) {
             exception.printStackTrace();
@@ -75,44 +79,59 @@ public class DataSourceJSON implements IDataSource {
     }
 
     public JSONArray readBooks() {
-        String jsonString = readFromFile(books);
-        return new JSONArray(jsonString);
+        if(bookJsonArray == null) {
+            String jsonString = readFromFile(books);
+            bookJsonArray = new JSONArray(jsonString);
+        }
+        return bookJsonArray;
     }
 
     public JSONArray readUsers() {
-        String jsonString = readFromFile(users);
-        return new JSONArray(jsonString);
+        if(userJsonArray == null) {
+            String jsonString = readFromFile(users);
+            userJsonArray = new JSONArray(jsonString);
+        }
+        return userJsonArray;
     }
 
     public JSONArray readBorrow() {
-        String jsonString = readFromFile(borrow);
-        return new JSONArray(jsonString);
+        if(borrowJsonArray == null) {
+            String jsonString = readFromFile(borrow);
+            borrowJsonArray = new JSONArray(jsonString);
+        }
+        return borrowJsonArray;
     }
 
-
-    public void writeBook(JSONObject book) {
+    public synchronized void writeBook(JSONObject book) {
         JSONArray booksArray = readBooks();
         booksArray.put(book);
-        writeToFile(booksArray, books);
+        writeBooks(booksArray);
     }
 
-    public void writeUser(JSONObject userObject) {
+    public synchronized void writeUser(JSONObject userObject) {
         JSONArray usersArray = readUsers();
         usersArray.put(userObject);
-        writeToFile(usersArray, users);
+        writeUsers(usersArray);
     }
 
-    public void writeBorrow(JSONObject borrowObject) {
+    public synchronized void writeBorrow(JSONObject borrowObject) {
         JSONArray borrowsArray = readBorrow();
         borrowsArray.put(borrowObject);
-        writeToFile(borrowsArray, borrow);
+        writeBorrows(borrowsArray);
     }
 
-    public void writeBooks(JSONArray newBooks) {
-        writeToFile(newBooks, books);
+    public synchronized void writeBooks(JSONArray newBooks) {
+        bookJsonArray = newBooks;
+        writeToFile(bookJsonArray, books);
     }
 
-    public void writeBorrows(JSONArray borrowedBooks) {
-        writeToFile(borrowedBooks, borrow);
+    public synchronized void writeBorrows(JSONArray newBorrowedBooks) {
+        borrowJsonArray = newBorrowedBooks;
+        writeToFile(borrowJsonArray, borrow);
+    }
+
+    public synchronized void writeUsers(JSONArray newUsers) {
+        userJsonArray = newUsers;
+        writeToFile(userJsonArray, users);
     }
 }

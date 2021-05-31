@@ -4,6 +4,7 @@ import io.library.datasource.GlobalDataSource;
 import io.library.menu.UserMenu;
 import io.library.model.AccessLevel;
 import io.library.model.User;
+import io.library.service.Utility;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -15,7 +16,7 @@ public class Authentication {
     }
 
     public static void signUp() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = Utility.getScanner();
         boolean completed = false;
         while (!completed) {
             System.out.print("Enter userName: ");
@@ -32,7 +33,11 @@ public class Authentication {
             sc.nextLine();
             System.out.println();
             try {
-                if (!GlobalDataSource.getDataSource().getUserDao().checkUserNameAvailability(userName)) {
+                if (userName.equals("") || mobileNumber.equals("") || mobileNumber.startsWith("-")) {
+                    System.out.println("Fields can't be empty");
+                } else if (age < 0 || age > 110) {
+                    System.out.println("Enter a valid age");
+                } else if (!GlobalDataSource.getDataSource().getUserDao().checkUserNameAvailability(userName)) {
                     System.out.println("Username already taken. Try different one");
                 } else if (!(password.length() > 6)) {
                     System.out.println("Password length should consist more than 6 characters");
@@ -41,7 +46,6 @@ public class Authentication {
                     GlobalDataSource.getDataSource().getUserDao().addUser(user);
                     completed = true;
                 }
-
             } catch (SQLException exception) {
                 System.out.println("Error in SQL");
                 exception.printStackTrace();
