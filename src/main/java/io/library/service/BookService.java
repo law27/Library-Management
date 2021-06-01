@@ -6,7 +6,6 @@ import io.library.datasource.DataSourceDatabase;
 import io.library.datasource.GlobalDataSource;
 import io.library.model.Book;
 
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +15,7 @@ import java.util.logging.Logger;
 public class BookService {
     private final static Logger logger = LoggingService.getLogger(BookService.class);
     private static Scanner sc = null;
-    private IBookDao bookDao;
+    private final IBookDao bookDao;
     private static BookService bookService = null;
     private final String HEADINGS = "Id\t\t\t\t\t\t\t\t\t\tBook Name\tAuthor\t\tQuantity\t\tGenre\n" +
                                     "==\t\t\t\t\t\t\t\t\t\t=========\t======\t\t========\t\t=====";
@@ -26,8 +25,7 @@ public class BookService {
         bookDao = GlobalDataSource.getDataSource().getBookDao();
     }
 
-    private BookService(InputStream stream, IBookDao bookDao) {
-        sc = new Scanner(stream);
+    private BookService(IBookDao bookDao) {
         this.bookDao = bookDao;
     }
 
@@ -38,27 +36,23 @@ public class BookService {
         return bookService;
     }
 
-    // For Mocking purpose
-    protected static BookService getInstance(InputStream stream, IBookDao bookDao) {
+    public static BookService getInstance(IBookDao bookDao) {
         if(bookService == null) {
-            bookService = new BookService(stream, bookDao);
-        }
-        else {
-            sc = new Scanner(stream);
-            bookService.bookDao = bookDao;
+            bookService = new BookService(bookDao);
         }
         return bookService;
     }
 
-    private List<Book> getBookByAuthor(String name) {
+    protected List<Book> getBookByAuthor(String name) {
         List<Book> booksList = null;
-        try {
-            booksList = bookDao.getBookByAuthor(name);
-        }
-        catch (SQLException exception) {
+        if(!name.equals("")) {
+            try {
+                booksList = bookDao.getBookByAuthor(name);
+            } catch (SQLException exception) {
 
-            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+                logger.log(CustomLevel.ERROR, exception.toString(), exception);
 
+            }
         }
         return booksList;
     }
@@ -77,7 +71,7 @@ public class BookService {
         }
     }
 
-    private Book getBookByName(String bookName) {
+    protected Book getBookByName(String bookName) {
         Book book = null;
         try {
             book = bookDao.getBookByName(bookName);
@@ -103,15 +97,17 @@ public class BookService {
         }
     }
 
-    private Book getBookById(String bookId) {
+    protected Book getBookById(String bookId) {
         Book book = null;
-        try {
-            book = bookDao.getBookById(bookId);
-        }
-        catch (SQLException exception) {
+        if(!bookId.equals("")) {
+            try {
+                book = bookDao.getBookById(bookId);
+            }
+            catch (SQLException exception) {
 
-            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+                logger.log(CustomLevel.ERROR, exception.toString(), exception);
 
+            }
         }
         return book;
     }
@@ -129,15 +125,16 @@ public class BookService {
         }
     }
 
-    private List<Book> getBooksByGenre(String genre) {
+    protected List<Book> getBooksByGenre(String genre) {
         List<Book> booksList = null;
-        try {
-            booksList = bookDao.getBookByGenre(genre);
-        }
-        catch (SQLException exception) {
+        if(!genre.equals("")) {
+            try {
+                booksList = bookDao.getBookByGenre(genre);
+            } catch (SQLException exception) {
 
-            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+                logger.log(CustomLevel.ERROR, exception.toString(), exception);
 
+            }
         }
         return booksList;
     }
@@ -171,19 +168,30 @@ public class BookService {
         }
     }
 
-    private void addNewBook(String bookName, String bookAuthor, int quantity, String genre) {
-        try {
-            Book book = new Book(bookName, bookAuthor, quantity, genre);
-            bookDao.addBook(book);
-
-            logger.log(Level.INFO, "New Book added: " + book);
-
+    protected boolean addNewBook(String bookName, String bookAuthor, int quantity, String genre) {
+        boolean isSuccess = false;
+        if (bookName.equals("") || bookAuthor.equals("") || genre.equals("")) {
+            System.out.println("None of the field can be empty");
         }
-        catch (SQLException exception) {
-
-            logger.log(CustomLevel.ERROR, exception.toString(), exception);
-
+        else if(quantity <= 0) {
+            System.out.println("Book quantity should be more than 0");
         }
+        else {
+            try {
+                Book book = new Book(bookName, bookAuthor, quantity, genre);
+                bookDao.addBook(book);
+
+                logger.log(Level.INFO, "New Book added: " + book);
+
+                isSuccess = true;
+            }
+            catch (SQLException exception) {
+
+                logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
+            }
+        }
+        return isSuccess;
     }
 
     private void printOptions() {
@@ -213,8 +221,7 @@ public class BookService {
         int quantity;
         try {
             quantity = sc.nextInt();
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             sc.nextLine();
 
             logger.log(CustomLevel.ERROR, exception.toString(), exception);
@@ -228,27 +235,22 @@ public class BookService {
         System.out.println("Enter Genre: ");
         String genre = sc.nextLine().toLowerCase();
         System.out.println();
-        if (bookName.equals("") || bookAuthor.equals("") || genre.equals("")) {
-            System.out.println("None of the field can be empty");
-        }
-        else if(quantity <= 0) {
-            System.out.println("Book quantity should be more than 0");
-        }
-        else {
-            Book checkBookIsAlreadyThere = getBookByName(bookName);
-            if (checkBookIsAlreadyThere != null) {
-                System.out.println("The book is already there do you want to increase the quantity ?");
-                System.out.println("Type 'yes' or type anything to cancel");
-                String option = sc.nextLine();
-                if (option.equals("yes")) {
-                    increaseQuantityOfABook(checkBookIsAlreadyThere.getId(), quantity);
-                }
-            } else {
-                addNewBook(bookName, bookAuthor, quantity, genre);
-                System.out.println();
+        Book checkBookIsAlreadyThere = getBookByName(bookName);
+        if (checkBookIsAlreadyThere != null) {
+            System.out.println("The book is already there do you want to increase the quantity ?");
+            System.out.println("Type 'yes' or type anything to cancel");
+            String option = sc.nextLine();
+            if (option.equals("yes")) {
+                increaseQuantityOfABook(checkBookIsAlreadyThere.getId(), quantity);
             }
+        } else {
+            if (addNewBook(bookName, bookAuthor, quantity, genre)) {
+                System.out.println("Book added Successfully");
+            } else {
+                System.out.println("Unable to add the book");
+            }
+            System.out.println();
         }
-
     }
 
     public void searchOptions() {

@@ -84,3 +84,51 @@ Jun 01, 2021 4:48:54 PM io.library.main.Main main
 INFO: Program exited 
 Jun 01, 2021 4:48:54 PM io.library.service.Utility closeScanner
 INFO: Scanner closed
+Jun 01, 2021 6:05:37 PM io.library.service.BookService addNewBook
+INFO: New Book added: a7cf8fbb-b3a8-40e0-bb37-0b6858523f78	python		lawrance	10			action
+
+Jun 01, 2021 6:05:37 PM io.library.service.BookService addNewBook
+INFO: New Book added: 26aaa895-dc5b-4170-b81b-69afd929f0a8	python		lawrance	10			action
+
+Jun 01, 2021 6:07:14 PM io.library.service.BookService addNewBook
+INFO: New Book added: 0b8b723d-bf1a-4fa6-8741-4935146dce74	python		lawrance	10			action
+
+Jun 01, 2021 6:07:14 PM io.library.service.BookService addNewBook
+INFO: New Book added: b9742bee-6841-44d4-bac4-1145c5b4d47b	python		lawrance	10			action
+
+Jun 01, 2021 6:15:44 PM io.library.service.BookService addNewBook
+INFO: New Book added: df6cd1c8-e4a9-4d95-99a0-a8cb0fb7a60a	python		lawrance	10			action
+
+Jun 01, 2021 6:15:44 PM io.library.service.BookService addNewBook
+INFO: New Book added: 213e36a7-a910-43fb-a157-fff3baa6bcf4	python		lawrance	10			action
+
+Jun 01, 2021 6:51:35 PM io.library.service.BookService addNewBook
+INFO: New Book added: 0bee6332-9ddc-4542-b688-061fae5bae79	python		lawrance	10			action
+
+Jun 01, 2021 6:51:35 PM io.library.service.BookService addNewBook
+INFO: New Book added: ff5340da-e66a-4ecb-9691-17e42fb838bc	python		lawrance	10			action
+
+Jun 01, 2021 7:03:51 PM io.library.service.BookService addNewBook
+INFO: New Book added: 8b82cb45-764a-4d5b-a74e-bc6641383a35	python		lawrance	10			action
+
+Jun 01, 2021 7:03:51 PM io.library.service.BookService addNewBook
+INFO: New Book added: f375a6bd-6522-4cdd-a024-b775a2ca1063	python		lawrance	10			action
+
+Jun 01, 2021 7:08:23 PM io.library.service.BookService addNewBook
+INFO: New Book added: 3f79c20a-9189-47ee-a880-f20fddc69f9b	python		lawrance	10			action
+
+Jun 01, 2021 7:08:23 PM io.library.service.BookService addNewBook
+INFO: New Book added: 317a2259-1993-41dc-9c8b-d82213782763	python		lawrance	10			action
+
+Jun 01, 2021 7:12:15 PM io.library.service.BookService addNewBook
+INFO: New Book added: df48c817-3648-4106-8fec-80d38114bab8	python		lawrance	10			action
+
+Jun 01, 2021 7:12:15 PM io.library.service.BookService addNewBook
+INFO: New Book added: f68ea89c-99e3-4746-9197-7ea64807d0bb	python		lawrance	10			action
+
+Jun 01, 2021 7:12:44 PM io.library.service.BookService addNewBook
+INFO: New Book added: 471dcc67-4086-48d5-bc3b-a2cc5e814a71	python		lawrance	10			action
+
+Jun 01, 2021 7:12:44 PM io.library.service.BookService addNewBook
+INFO: New Book added: d133d28c-05c9-4be4-ab57-49fd8b2e6900	python		lawrance	10			action
+
