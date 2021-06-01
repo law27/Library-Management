@@ -15,8 +15,8 @@ public class UserService {
     private static Scanner sc = null;
     private final static Logger logger = LoggingService.getLogger(UserService.class);
 
-    private IUserDao userDao;
-    private IBorrowBookDao borrowBookDao;
+    private final IUserDao userDao;
+    private final IBorrowBookDao borrowBookDao;
     private final String HEADINGS = "Username\t\tMobile Number\t\t\tAge\n" +
                                     "====\t\t\t========\t\t\t============";
 
@@ -26,6 +26,11 @@ public class UserService {
         sc = Utility.getScanner();
         userDao = GlobalDataSource.getDataSource().getUserDao();
         borrowBookDao = GlobalDataSource.getDataSource().getBorrowBookDao();
+    }
+
+    private UserService(IUserDao userDao, IBorrowBookDao borrowBookDao) {
+        this.userDao = userDao;
+        this.borrowBookDao = borrowBookDao;
     }
 
     public static UserService getInstance() {
@@ -38,10 +43,8 @@ public class UserService {
     // For mocking purpose
     protected static UserService getInstance(IUserDao userDao, IBorrowBookDao borrowBookDao) {
         if(userService == null) {
-            userService = new UserService();
+            userService = new UserService(userDao, borrowBookDao);
         }
-        userService.userDao = userDao;
-        userService.borrowBookDao = borrowBookDao;
         return userService;
     }
 
@@ -56,16 +59,18 @@ public class UserService {
         }
     }
 
-    private User getUserByUserName(String userName) {
+    protected User getUserByUserName(String userName) {
         User user = null;
-        try {
-            user = userDao.getUser(userName);
-        }
-        catch (SQLException exception) {
+        if(!userName.equals("")) {
+            try {
+                user = userDao.getUser(userName);
+            } catch (SQLException exception) {
 
-            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+                logger.log(CustomLevel.ERROR, exception.toString(), exception);
 
+            }
         }
+
         return user;
     }
 
