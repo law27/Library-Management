@@ -5,11 +5,15 @@ import io.library.auth.Authentication;
 import io.library.auth.LoggedInUser;
 import io.library.model.AccessLevel;
 import io.library.model.User;
+import io.library.service.LoggingService;
 import io.library.service.Utility;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class MainMenu implements IMenu {
+
+    private final static Logger logger = LoggingService.getLogger(MainMenu.class);
 
     public void printOptions() {
         System.out.println("1. New User");

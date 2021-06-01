@@ -1,0 +1,86 @@
+Jun 01, 2021 3:10:39 PM io.library.main.Main main
+SEVERE: java.sql.SQLException: Access denied for user 'root'@'172.17.0.1' (using password: YES)
+java.sql.SQLException: Access denied for user 'root'@'172.17.0.1' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:129)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:833)
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:453)
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:246)
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:198)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:677)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:228)
+	at io.library.datasource.DataSourceDatabase.createConnection(DataSourceDatabase.java:52)
+	at io.library.main.Main.main(Main.java:33)
+
+Jun 01, 2021 3:10:39 PM io.library.service.Utility closeScanner
+INFO: Scanner closed
+Jun 01, 2021 3:35:41 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 01, 2021 3:35:41 PM io.library.main.Main main
+SEVERE: java.io.FileNotFoundException: Required files not found
+java.io.FileNotFoundException: Required files not found
+	at io.library.datasource.DataSourceJSON.createConnection(DataSourceJSON.java:54)
+	at io.library.main.Main.main(Main.java:33)
+
+Jun 01, 2021 3:35:41 PM io.library.main.Main main
+INFO: Program exited 
+Jun 01, 2021 3:35:41 PM io.library.service.Utility closeScanner
+INFO: Scanner closed
+Jun 01, 2021 3:36:36 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 01, 2021 3:36:36 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 01, 2021 3:36:36 PM io.library.main.Main main
+INFO: Program initiated
+Jun 01, 2021 3:36:36 PM io.library.menu.MainMenu show
+INFO: Showing
+Jun 01, 2021 3:36:38 PM io.library.main.Main main
+INFO: Program exited 
+Jun 01, 2021 3:36:38 PM io.library.service.Utility closeScanner
+INFO: Scanner closed
+Jun 01, 2021 3:37:43 PM io.library.main.Main main
+INFO: Program started
+Jun 01, 2021 3:37:43 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 01, 2021 3:37:43 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 01, 2021 3:37:43 PM io.library.main.Main main
+INFO: Program initiated
+Jun 01, 2021 3:37:43 PM io.library.menu.MainMenu show
+INFO: Showing
+Jun 01, 2021 3:37:45 PM io.library.main.Main main
+INFO: Program exited 
+Jun 01, 2021 3:37:45 PM io.library.service.Utility closeScanner
+INFO: Scanner closed
+Jun 01, 2021 4:48:04 PM io.library.main.Main main
+INFO: Program started
+Jun 01, 2021 4:48:04 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 01, 2021 4:48:04 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 01, 2021 4:48:04 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 01, 2021 4:48:04 PM io.library.menu.MainMenu show
+INFO: Showing
+Jun 01, 2021 4:48:21 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 01, 2021 4:48:21 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to users.json
+Jun 01, 2021 4:48:21 PM io.library.auth.Authentication signUp
+INFO: New user added rubesh
+Jun 01, 2021 4:48:31 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: rubesh
+Jun 01, 2021 4:48:39 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 01, 2021 4:48:52 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 01, 2021 4:48:52 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 01, 2021 4:48:52 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 01, 2021 4:48:52 PM io.library.service.BorrowService borrowABook
+INFO: Book borrowed: 2bba4549-7da4-44de-a5da-904514c77f00 by: rubesh
+Jun 01, 2021 4:48:54 PM io.library.main.Main main
+INFO: Program exited 
+Jun 01, 2021 4:48:54 PM io.library.service.Utility closeScanner
+INFO: Scanner closed

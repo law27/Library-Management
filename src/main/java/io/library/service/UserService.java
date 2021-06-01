@@ -9,9 +9,11 @@ import io.library.model.User;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class UserService {
     private static Scanner sc = null;
+    private final static Logger logger = LoggingService.getLogger(UserService.class);
 
     private IUserDao userDao;
     private IBorrowBookDao borrowBookDao;
@@ -60,7 +62,9 @@ public class UserService {
             user = userDao.getUser(userName);
         }
         catch (SQLException exception) {
-            System.out.println(exception.getMessage());
+
+            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
         }
         return user;
     }
@@ -78,7 +82,9 @@ public class UserService {
             borrowedBookList = borrowBookDao.getAllBorrowedBook(userName);
         }
         catch (SQLException exception) {
-            System.out.println(exception.getMessage());
+
+            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
         }
         return borrowedBookList;
     }
@@ -109,6 +115,9 @@ public class UserService {
             }
             catch (Exception exception) {
                 sc.nextLine();
+
+                logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
                 System.out.println("Option should be number");
                 continue;
             }

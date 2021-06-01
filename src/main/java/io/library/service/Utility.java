@@ -2,8 +2,10 @@ package io.library.service;
 
 import java.util.Scanner;
 import java.util.StringJoiner;
+import java.util.logging.Logger;
 
 public class Utility {
+    private static final Logger logger = LoggingService.getLogger(Utility.class);
     private static final Scanner scanner = new Scanner(System.in);
 
     public static String getFormattedString(String value) {
@@ -14,6 +16,7 @@ public class Utility {
         return scanner;
     }
     public static void closeScanner() {
+        logger.info("Scanner closed");
         scanner.close();
     }
 

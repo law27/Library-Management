@@ -1,12 +1,13 @@
 package io.library.menu;
 
-import io.library.service.BookService;
-import io.library.service.UserService;
-import io.library.service.Utility;
+import io.library.service.*;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class AdminMenu implements IMenu {
+
+    private final static Logger logger = LoggingService.getLogger(AdminMenu.class);
 
     @Override
     public void printOptions() {
@@ -30,6 +31,9 @@ public class AdminMenu implements IMenu {
             }
             catch (Exception exception) {
                 sc.nextLine();
+
+                logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
                 System.out.println("Enter a valid Number");
                 System.out.println();
                 continue;

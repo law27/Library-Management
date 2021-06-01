@@ -10,8 +10,11 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BookService {
+    private final static Logger logger = LoggingService.getLogger(BookService.class);
     private static Scanner sc = null;
     private IBookDao bookDao;
     private static BookService bookService = null;
@@ -53,8 +56,9 @@ public class BookService {
             booksList = bookDao.getBookByAuthor(name);
         }
         catch (SQLException exception) {
-            System.out.println("SQL Error");
-            exception.printStackTrace();
+
+            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
         }
         return booksList;
     }
@@ -79,8 +83,9 @@ public class BookService {
             book = bookDao.getBookByName(bookName);
         }
         catch (SQLException exception) {
-            System.out.println("SQL Exception");
-            exception.printStackTrace();
+
+            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
         }
         return book;
     }
@@ -104,8 +109,9 @@ public class BookService {
             book = bookDao.getBookById(bookId);
         }
         catch (SQLException exception) {
-            System.out.println("SQL Exception");
-            exception.printStackTrace();
+
+            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
         }
         return book;
     }
@@ -129,8 +135,9 @@ public class BookService {
             booksList = bookDao.getBookByGenre(genre);
         }
         catch (SQLException exception) {
-            System.out.println("SQL Error");
-            exception.printStackTrace();
+
+            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
         }
         return booksList;
     }
@@ -158,8 +165,9 @@ public class BookService {
             }
         }
         catch (SQLException exception) {
-            System.out.println("SQL Exception");
-            exception.printStackTrace();
+
+            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
         }
     }
 
@@ -167,10 +175,14 @@ public class BookService {
         try {
             Book book = new Book(bookName, bookAuthor, quantity, genre);
             bookDao.addBook(book);
+
+            logger.log(Level.INFO, "New Book added: " + book);
+
         }
         catch (SQLException exception) {
-            System.out.println("SQL Exception");
-            exception.printStackTrace();
+
+            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
         }
     }
 
@@ -204,6 +216,9 @@ public class BookService {
         }
         catch (Exception exception) {
             sc.nextLine();
+
+            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
             System.out.println("Quantity should be of number");
             return;
         }
@@ -248,6 +263,9 @@ public class BookService {
             }
             catch (Exception exception) {
                 sc.nextLine();
+
+                logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
                 System.out.println("Enter a valid Number");
                 System.out.println();
                 continue;

@@ -1,12 +1,16 @@
 package io.library.datasource;
 
 import io.library.dao.*;
+import io.library.service.LoggingService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DataSourceJSON implements IDataSource {
+    private static final Logger logger = LoggingService.getLogger(DataSourceJSON.class);
     private volatile static DataSourceJSON dataSourceJSON = null;
     private final IUserDao userDao;
     private final IBookDao bookDao;
@@ -44,6 +48,7 @@ public class DataSourceJSON implements IDataSource {
             this.books = books;
             this.users = users;
             this.borrow = borrow;
+            logger.log(Level.INFO, "Files loaded");
         }
         else {
             throw new FileNotFoundException("Required files not found");
@@ -61,9 +66,14 @@ public class DataSourceJSON implements IDataSource {
         String result = null;
         try(InputStream inputStream = new FileInputStream(file)) {
             result = new String(inputStream.readAllBytes());
+
+            logger.log(Level.INFO, "Reading from " + file.getName() );
+
         }
         catch (IOException exception) {
-            exception.printStackTrace();
+
+            logger.log(Level.SEVERE, exception.toString(), exception);
+
         }
         return result;
     }
@@ -72,9 +82,14 @@ public class DataSourceJSON implements IDataSource {
         try(FileWriter fileWriter = new FileWriter(file);
             BufferedWriter writer = new BufferedWriter(fileWriter) ) {
             writer.write(array.toString(4));
+
+            logger.log(Level.INFO, "Writing to " + file.getName());
+
         }
         catch (Exception exception) {
-            exception.printStackTrace();
+
+            logger.log(Level.SEVERE, exception.toString(), exception);
+
         }
     }
 

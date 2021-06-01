@@ -1,13 +1,12 @@
 package io.library.menu;
 
-import io.library.service.BookService;
-import io.library.service.BorrowService;
-import io.library.service.Utility;
+import io.library.service.*;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class UserMenu implements IMenu {
-
+    private final static Logger logger = LoggingService.getLogger(UserMenu.class);
     @Override
     public void printOptions() {
         System.out.println("1. Search Books");
@@ -31,6 +30,9 @@ public class UserMenu implements IMenu {
             }
             catch (Exception exception) {
                 sc.nextLine();
+
+                logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
                 System.out.println("Enter a valid Number\n");
                 continue;
             }

@@ -10,8 +10,11 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BorrowService {
+    private final static Logger logger = LoggingService.getLogger(BorrowService.class);
     private static Scanner sc = null;
 
     private User user;
@@ -56,9 +59,14 @@ public class BorrowService {
     private void returnTheBook(String bookId) {
         try {
             borrowBookDao.returnABook(bookId, user.getUserName());
+
+            logger.log(Level.INFO, "Book returned: " + bookId + " by: " + user.getUserName());
+
         }
         catch (Exception exception) {
-            System.out.println(exception.getMessage());
+
+            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
         }
 
     }
@@ -71,9 +79,13 @@ public class BorrowService {
             } else {
                 borrowBookDao.borrowABook(bookId, userName);
             }
-        }
-        catch (Exception exception) {
-            System.out.println(exception.getMessage());
+
+            logger.log(Level.INFO, "Book borrowed: " + bookId + " by: " + userName);
+
+        } catch (Exception exception) {
+
+            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
         }
     }
 
@@ -82,8 +94,9 @@ public class BorrowService {
         try {
             count = borrowBookDao.numberOfBookBorrowed(userName);
         } catch (SQLException exception) {
-            System.out.println("SQL Exception");
-            System.out.println(exception.getMessage());
+
+            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
         }
         return count;
     }
@@ -93,8 +106,9 @@ public class BorrowService {
         try {
             borrowedBookList = borrowBookDao.getAllBorrowedBook(userName);
         } catch (SQLException exception) {
-            System.out.println("SQL Exception");
-            System.out.println(exception.getMessage());
+
+            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
         }
         return borrowedBookList;
     }
@@ -110,7 +124,6 @@ public class BorrowService {
             return;
         }
         borrowABook(bookId, user.getUserName());
-        System.out.println("Book borrowed successfully");
     }
 
     public void listBorrowedBooks(List<BorrowedBook> books) {
@@ -145,6 +158,9 @@ public class BorrowService {
                 }
                 catch (Exception exception) {
                     sc.nextLine();
+
+                    logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
                     System.out.println("Option should be a number");
                     continue;
                 }

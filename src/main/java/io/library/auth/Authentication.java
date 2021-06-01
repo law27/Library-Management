@@ -4,12 +4,18 @@ import io.library.datasource.GlobalDataSource;
 import io.library.menu.UserMenu;
 import io.library.model.AccessLevel;
 import io.library.model.User;
+import io.library.service.CustomLevel;
+import io.library.service.LoggingService;
 import io.library.service.Utility;
 
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Authentication {
+
+    private final static Logger logger = LoggingService.getLogger(Authentication.class);
 
     private Authentication() {
 
@@ -29,7 +35,18 @@ public class Authentication {
             String mobileNumber = sc.nextLine();
             System.out.println();
             System.out.print("Enter Age ");
-            int age = sc.nextInt();
+            int age;
+            try {
+                age = sc.nextInt();
+            }
+            catch (Exception exception) {
+                sc.nextLine();
+
+                logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
+                System.out.println("Age should be of number");
+                return;
+            }
             sc.nextLine();
             System.out.println();
             try {
@@ -44,11 +61,13 @@ public class Authentication {
                 } else {
                     User user = new User(userName, password, mobileNumber, age, AccessLevel.USER, new UserMenu());
                     GlobalDataSource.getDataSource().getUserDao().addUser(user);
+                    logger.log(Level.INFO, "New user added " + userName );
                     completed = true;
                 }
             } catch (SQLException exception) {
-                System.out.println("Error in SQL");
-                exception.printStackTrace();
+
+                logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
             }
         }
     }
