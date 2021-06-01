@@ -213,7 +213,7 @@ class BookServiceTest {
     @Test
     void getBookByNameWithCorrectArgumentCallsProperDaoMethod() throws SQLException {
         //Given
-        String bookName = "python";
+        String bookName = "haskell";
 
         //When
         bookService.getBookByName(bookName);

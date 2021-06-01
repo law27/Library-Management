@@ -1,6 +1,5 @@
 package io.library.datasource;
 
-import io.library.auth.LoggedInUser;
 import io.library.dao.*;
 import io.library.service.LoggingService;
 
