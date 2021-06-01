@@ -6,7 +6,6 @@ import io.library.datasource.GlobalDataSource;
 import io.library.model.BorrowedBook;
 import io.library.model.User;
 
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
@@ -17,8 +16,9 @@ public class BorrowService {
     private final static Logger logger = LoggingService.getLogger(BorrowService.class);
     private static Scanner sc = null;
 
-    private User user;
-    private IBorrowBookDao borrowBookDao;
+    private final User user;
+    private final IBorrowBookDao borrowBookDao;
+    private final BookService bookService;
 
     private static BorrowService borrowService;
 
@@ -29,12 +29,13 @@ public class BorrowService {
         sc = Utility.getScanner();
         user = LoggedInUser.getLoggedInUser();
         borrowBookDao = GlobalDataSource.getDataSource().getBorrowBookDao();
+        bookService = BookService.getInstance();
     }
 
-    private BorrowService(User user, IBorrowBookDao borrowBookDao, InputStream stream) {
-        sc = new Scanner(stream);
+    private BorrowService(User user, IBorrowBookDao borrowBookDao, BookService bookService) {
         this.borrowBookDao = borrowBookDao;
         this.user = user;
+        this.bookService = bookService;
     }
 
     public static BorrowService getInstance() {
@@ -45,51 +46,58 @@ public class BorrowService {
     }
 
     // For Mocking purpose
-    public static BorrowService getInstance(User user, IBorrowBookDao borrowBookDao, InputStream stream) {
+    public static BorrowService getInstance(User user, IBorrowBookDao borrowBookDao, BookService bookService) {
         if (borrowService == null) {
-            borrowService = new BorrowService(user, borrowBookDao, stream);
-        } else {
-            borrowService.user = user;
-            borrowService.borrowBookDao = borrowBookDao;
-            sc = new Scanner(stream);
+            borrowService = new BorrowService(user, borrowBookDao, bookService);
         }
         return borrowService;
     }
 
-    private void returnTheBook(String bookId) {
-        try {
-            borrowBookDao.returnABook(bookId, user.getUserName());
+    protected boolean returnTheBook(String bookId) {
+        boolean isSuccess = false;
+        if(!bookId.equals("")) {
+            try {
+                borrowBookDao.returnABook(bookId, user.getUserName());
 
-            logger.log(Level.INFO, "Book returned: " + bookId + " by: " + user.getUserName());
+                logger.log(Level.INFO, "Book returned: " + bookId + " by: " + user.getUserName());
 
-        }
-        catch (Exception exception) {
+                isSuccess = true;
+            } catch (Exception exception) {
 
-            logger.log(CustomLevel.ERROR, exception.toString(), exception);
+                logger.log(CustomLevel.ERROR, exception.toString(), exception);
 
-        }
-
-    }
-
-    private void borrowABook(String bookId, String userName) {
-        try {
-            int bookQuantity = BookService.getInstance().getQuantityOfBook(bookId);
-            if (bookQuantity == 0) {
-                System.out.println("No stock is left. Please come again later");
-            } else {
-                borrowBookDao.borrowABook(bookId, userName);
             }
 
-            logger.log(Level.INFO, "Book borrowed: " + bookId + " by: " + userName);
-
-        } catch (Exception exception) {
-
-            logger.log(CustomLevel.ERROR, exception.toString(), exception);
-
         }
+
+        return isSuccess;
     }
 
-    private int getNumberOfBorrowedBookOfUser(String userName) {
+    protected boolean borrowABook(String bookId, String userName) {
+        boolean isSuccess = false;
+        if (!bookId.equals("")) {
+            try {
+                int bookQuantity = bookService.getQuantityOfBook(bookId);
+                if (bookQuantity == 0) {
+                    System.out.println("No stock is left. Please come again later");
+                    return false;
+                } else {
+                    borrowBookDao.borrowABook(bookId, userName);
+                }
+
+                logger.log(Level.INFO, "Book borrowed: " + bookId + " by: " + userName);
+
+                isSuccess = true;
+            } catch (Exception exception) {
+
+                logger.log(CustomLevel.ERROR, exception.toString(), exception);
+
+            }
+        }
+        return isSuccess;
+    }
+
+    protected int getNumberOfBorrowedBookOfUser(String userName) {
         int count = 0;
         try {
             count = borrowBookDao.numberOfBookBorrowed(userName);
@@ -101,7 +109,7 @@ public class BorrowService {
         return count;
     }
 
-    private List<BorrowedBook> getAllBorrowedBook(String userName) {
+    protected List<BorrowedBook> getAllBorrowedBook(String userName) {
         List<BorrowedBook> borrowedBookList = null;
         try {
             borrowedBookList = borrowBookDao.getAllBorrowedBook(userName);
@@ -123,7 +131,12 @@ public class BorrowService {
             System.out.println("You've exceeded the amount of book you can borrow. Return a book before borrowing another book");
             return;
         }
-        borrowABook(bookId, user.getUserName());
+        if(borrowABook(bookId, user.getUserName())) {
+            System.out.println("Borrowed Successfully");
+        }
+        else {
+            System.out.println("Borrow failed");
+        }
     }
 
     public void listBorrowedBooks(List<BorrowedBook> books) {
@@ -140,41 +153,55 @@ public class BorrowService {
 
     public void listBorrowedBooks() {
         var books = getAllBorrowedBook(user.getUserName());
-        listBorrowedBooks(books);
+        if(books == null) {
+            System.out.println("Some error occurred");
+        }
+        else {
+            listBorrowedBooks(books);
+        }
         System.out.println();
     }
 
 
     public void returnABorrowedBook() {
         var books = getAllBorrowedBook(user.getUserName());
-        boolean satisfied = false;
-        while (!satisfied) {
-            listBorrowedBooks(books);
-            if (!books.isEmpty()) {
-                System.out.print("Select a book to return ");
-                int option;
-                try {
-                    option = sc.nextInt();
-                }
-                catch (Exception exception) {
-                    sc.nextLine();
+        if (books == null) {
+            System.out.println("Some error occurred");
+        } else {
+            boolean satisfied = false;
+            while (!satisfied) {
+                listBorrowedBooks(books);
+                if (!books.isEmpty()) {
+                    System.out.print("Select a book to return ");
+                    int option;
+                    try {
+                        option = sc.nextInt();
+                    } catch (Exception exception) {
+                        sc.nextLine();
 
-                    logger.log(CustomLevel.ERROR, exception.toString(), exception);
+                        logger.log(CustomLevel.ERROR, exception.toString(), exception);
 
-                    System.out.println("Option should be a number");
-                    continue;
-                }
-                System.out.println();
-                if (option <= 0 || option > books.size()) {
-                    System.out.println("Invalid option try Again");
+                        System.out.println("Option should be a number");
+                        continue;
+                    }
+                    System.out.println();
+                    if (option <= 0 || option > books.size()) {
+                        System.out.println("Invalid option try Again");
+                    } else {
+                        if(returnTheBook(books.get(option - 1).getBook().getId())) {
+                            System.out.println("Returned Successfully");
+                        }
+                        else {
+                            System.out.println("Return failed. Try Later");
+                        }
+                        satisfied = true;
+                    }
                 } else {
-                    returnTheBook(books.get(option - 1).getBook().getId());
-                    System.out.println("Returned Successfully");
                     satisfied = true;
                 }
-            } else {
-                satisfied = true;
             }
+
         }
+
     }
 }

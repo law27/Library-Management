@@ -132,3 +132,25 @@ INFO: New Book added: 471dcc67-4086-48d5-bc3b-a2cc5e814a71	python		lawrance	10		
 Jun 01, 2021 7:12:44 PM io.library.service.BookService addNewBook
 INFO: New Book added: d133d28c-05c9-4be4-ab57-49fd8b2e6900	python		lawrance	10			action
 
+Jun 01, 2021 8:18:39 PM io.library.service.BorrowService borrowABook
+INFO: Book borrowed: 57d459a3-b775-4685-b282-998353c55403 by: lawrance
+Jun 01, 2021 8:19:01 PM io.library.service.BorrowService borrowABook
+INFO: Book borrowed: 7e107e01-75eb-4a4f-baf5-d53c29815d6e by: lawrance
+Jun 01, 2021 8:22:32 PM io.library.service.BorrowService borrowABook
+INFO: Book borrowed: 34808420-f299-4209-a42a-430eb701f9ae by: lawrance
+Jun 01, 2021 8:35:32 PM io.library.service.BorrowService borrowABook
+INFO: Book borrowed: cefa2917-f512-401a-a1ae-a55c927002be by: lawrance
+Jun 01, 2021 8:35:52 PM io.library.service.BorrowService borrowABook
+INFO: Book borrowed: d422ed09-6ed9-415c-8ef6-a93fde41a2bf by: lawrance
+Jun 01, 2021 8:36:36 PM io.library.service.BorrowService borrowABook
+INFO: Book borrowed: 1943e442-d3f9-4226-9194-e39badfcd813 by: lawrance
+Jun 01, 2021 8:37:01 PM io.library.service.BorrowService borrowABook
+INFO: Book borrowed: bf0cfe71-9b09-4727-9022-4dd1669fddb1 by: lawrance
+Jun 01, 2021 8:50:04 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 9d9c2688-6738-4f08-9999-cc5f0bb6e6a9 by: lawrance
+Jun 01, 2021 8:51:12 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: a45c48bb-3173-4817-8a2c-af4ee865950a by: lawrance
+Jun 01, 2021 8:56:55 PM io.library.service.BorrowService borrowABook
+INFO: Book borrowed: 6da5a47e-3440-4f12-a3fe-b442a872a3be by: lawrance
+Jun 01, 2021 8:59:24 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2f9a77d3-1fbe-4ac9-a5c4-bb3cbc4102d4 by: lawrance
