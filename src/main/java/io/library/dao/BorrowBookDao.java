@@ -6,14 +6,11 @@ import io.library.datasource.GlobalDataSource;
 import io.library.model.Book;
 import io.library.model.BorrowedBook;
 import io.library.service.Utility;
-import org.joda.time.DateTime;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class BorrowBookDao implements IBorrowBookDao {
 
@@ -48,18 +45,15 @@ public class BorrowBookDao implements IBorrowBookDao {
         return getAllBorrowedBook(userName).size();
     }
 
-    public void borrowABook(String bookId, String userName) {
+    public void borrowABook(String bookId, String userName, String borrowDate, String returnDate) {
         try {
-            DateTime today = new DateTime();
-            DateTime returnDate = new DateTime().plusDays(7);
-            System.out.println(returnDate);
             int userId = GlobalDataSource.getDataSource().getUserDao().getUserId(userName);
             String sql = String.format("INSERT INTO borrowed_books(book_id, user_id, borrowed_date, return_date) " +
                             "VALUES(%s, %d, %s, %s)",
                             Utility.getFormattedString(bookId),
                             userId,
-                            Utility.getFormattedString(today.toString()),
-                            Utility.getFormattedString(returnDate.toString()));
+                            Utility.getFormattedString(borrowDate),
+                            Utility.getFormattedString(returnDate));
             System.out.println(sql);
             DataSourceDatabase.sqlExecutionerForDML(sql);
             GlobalDataSource.getDataSource().getBookDao().decreaseQuantityOfBook(bookId, 1);

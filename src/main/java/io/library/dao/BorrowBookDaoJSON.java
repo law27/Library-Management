@@ -43,7 +43,7 @@ public class BorrowBookDaoJSON implements IBorrowBookDao {
     }
 
     @Override
-    public void borrowABook(String bookId, String userName) throws SQLException {
+    public void borrowABook(String bookId, String userName,String borrowDate, String returnDate) throws SQLException {
         IBookDao bookDao = GlobalDataSource.getDataSource().getBookDao();
         IUserDao userDao = GlobalDataSource.getDataSource().getUserDao();
         Book toBeBorrowed =  bookDao.getBookById(bookId);
@@ -52,13 +52,11 @@ public class BorrowBookDaoJSON implements IBorrowBookDao {
             System.out.println("Book doesn't exist");
         }
         else {
-            DateTime today = new DateTime();
-            DateTime returnDate = new DateTime().plusDays(7);
             JSONObject object = new JSONObject();
             object.put("book_id", bookId);
             object.put("user_id", userId);
-            object.put("borrowed_date", today.toString());
-            object.put("return_date", returnDate.toString());
+            object.put("borrowed_date", borrowDate);
+            object.put("return_date", returnDate);
             DataSourceJSON.getInstance().writeBorrow(object);
         }
         bookDao.decreaseQuantityOfBook(bookId, 1);

@@ -6,6 +6,7 @@ import io.library.datasource.GlobalDataSource;
 import io.library.menu.MainMenu;
 import io.library.service.LoggingService;
 import io.library.service.Utility;
+import io.library.service.XMLUtility;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -33,6 +34,7 @@ public class Main {
                 File users = new File("src/main/json/users.json");
                 File books = new File("src/main/json/books.json");
                 File borrow = new File("src/main/json/borrow.json");
+                XMLUtility.init();
                 DataSourceJSON.getInstance().createConnection(books, users, borrow);
                 GlobalDataSource.setDataSource(DataSourceJSON.getInstance());
             } else {

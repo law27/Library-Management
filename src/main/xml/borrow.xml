@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<borrows>
+    <borrow>
+        <book-id>2bba4549-7da4-44de-a5da-904514c77f00</book-id>
+        <user>lawrance</user>
+        <borrow-date>2021-06-07T19:12:40.684+05:30</borrow-date>
+        <return-date>2021-06-14T19:12:40.728+05:30</return-date>
+    </borrow>
+    <borrow>
+        <book-id>2bba4549-7da4-44de-a5da-904514c77f00</book-id>
+        <user>lawrance</user>
+        <borrow-date>2021-06-07T19:13:12.363+05:30</borrow-date>
+        <return-date>2021-06-14T19:13:12.415+05:30</return-date>
+    </borrow>
+</borrows>

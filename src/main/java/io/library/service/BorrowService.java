@@ -5,6 +5,7 @@ import io.library.dao.IBorrowBookDao;
 import io.library.datasource.GlobalDataSource;
 import io.library.model.BorrowedBook;
 import io.library.model.User;
+import org.joda.time.DateTime;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -82,14 +83,16 @@ public class BorrowService {
                     System.out.println("No stock is left. Please come again later");
                     return false;
                 } else {
-                    borrowBookDao.borrowABook(bookId, userName);
+                    DateTime today = new DateTime();
+                    DateTime returnDate = new DateTime().plusDays(7);
+                    borrowBookDao.borrowABook(bookId, userName, today.toString(), returnDate.toString());
+                    XMLUtility.writeToXML(bookId, userName, today.toString(), returnDate.toString());
                 }
 
                 logger.log(Level.INFO, "Book borrowed: " + bookId + " by: " + userName);
 
                 isSuccess = true;
             } catch (Exception exception) {
-
                 logger.log(CustomLevel.ERROR, exception.toString(), exception);
 
             }

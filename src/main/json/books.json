@@ -1,6 +1,6 @@
 [
     {
-        "quantity": 9,
+        "quantity": 10,
         "genre": "computer",
         "book_author": "lawrance",
         "id": "61d0146c-65d5-4241-be23-7b68f631d61f",
@@ -49,7 +49,7 @@
         "book_name": "gtk-3"
     },
     {
-        "quantity": 21,
+        "quantity": 20,
         "genre": "computer",
         "book_author": "lawrance",
         "id": "2bba4549-7da4-44de-a5da-904514c77f00",

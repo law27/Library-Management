@@ -1,0 +1,536 @@
+Jun 07, 2021 6:15:02 PM io.library.service.BookService addNewBook
+INFO: New Book added: e4da7175-4af0-4287-a409-a97c73c3c8c3	python		lawrance	10			action
+
+Jun 07, 2021 6:15:02 PM io.library.service.BookService addNewBook
+INFO: New Book added: dbb4a443-f819-41c0-9b2d-d3f6e614cee0	python		lawrance	10			action
+
+Jun 07, 2021 6:15:04 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 6:15:04 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 6:15:04 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 6:15:04 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 6:15:09 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 6:15:09 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 6:15:09 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 6:15:09 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 6:15:20 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 6:15:20 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 6:15:20 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 6:15:20 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 6:15:25 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 6:15:25 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 6:15:36 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 07, 2021 6:15:44 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 07, 2021 6:15:48 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:15:48 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:15:48 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 61d0146c-65d5-4241-be23-7b68f631d61f by: lawrance
+Jun 07, 2021 6:16:03 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:16:03 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:17:55 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 6:17:55 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 6:17:55 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 6:17:55 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 6:18:02 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 6:18:02 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 6:18:08 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 07, 2021 6:18:10 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 07, 2021 6:18:11 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:18:11 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:18:11 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 6:18:14 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:18:14 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:20:08 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 6:20:08 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 6:20:08 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 6:20:08 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 6:20:16 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 6:20:16 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 6:20:39 PM io.library.main.Main main
+SEVERE: java.util.NoSuchElementException: No line found
+java.util.NoSuchElementException: No line found
+	at java.base/java.util.Scanner.nextLine(Scanner.java:1651)
+	at io.library.service.BorrowService.borrowABook(BorrowService.java:131)
+	at io.library.menu.UserMenu.show(UserMenu.java:46)
+	at io.library.menu.MainMenu.show(MainMenu.java:66)
+	at io.library.main.Main.main(Main.java:49)
+
+Jun 07, 2021 6:20:39 PM io.library.main.Main main
+INFO: Program exited 
+Jun 07, 2021 6:20:39 PM io.library.service.Utility closeScanner
+INFO: Scanner closed
+Jun 07, 2021 6:20:43 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 6:20:43 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 6:20:43 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 6:20:43 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 6:20:59 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 6:20:59 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 6:21:02 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 07, 2021 6:21:02 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 07, 2021 6:21:03 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:21:03 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:21:03 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 6:21:06 PM io.library.main.Main main
+SEVERE: java.util.NoSuchElementException: No line found
+java.util.NoSuchElementException: No line found
+	at java.base/java.util.Scanner.nextLine(Scanner.java:1651)
+	at io.library.service.BorrowService.borrowABook(BorrowService.java:131)
+	at io.library.menu.UserMenu.show(UserMenu.java:46)
+	at io.library.menu.MainMenu.show(MainMenu.java:66)
+	at io.library.main.Main.main(Main.java:49)
+
+Jun 07, 2021 6:21:06 PM io.library.main.Main main
+INFO: Program exited 
+Jun 07, 2021 6:21:06 PM io.library.service.Utility closeScanner
+INFO: Scanner closed
+Jun 07, 2021 6:21:10 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 6:21:10 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 6:21:10 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 6:21:10 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 6:21:31 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 6:21:31 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 6:21:35 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 07, 2021 6:21:39 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 07, 2021 6:21:55 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:21:55 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:22:41 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:22:41 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:22:41 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 6:23:59 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:23:59 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:34:36 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 6:34:36 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 6:34:36 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 6:34:36 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 6:34:45 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 6:34:45 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 6:34:48 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 07, 2021 6:34:48 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 07, 2021 6:34:49 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:34:49 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:34:49 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 6:35:38 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:35:38 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:36:23 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:36:23 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:36:23 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 6:36:25 PM io.library.main.Main main
+INFO: Program exited 
+Jun 07, 2021 6:36:25 PM io.library.service.Utility closeScanner
+INFO: Scanner closed
+Jun 07, 2021 6:36:30 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 6:36:30 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 6:36:30 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 6:36:30 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 6:36:38 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 6:36:38 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 6:36:51 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 07, 2021 6:36:51 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 07, 2021 6:36:51 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:36:51 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:37:53 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:37:53 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:37:53 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 6:37:55 PM io.library.main.Main main
+INFO: Program exited 
+Jun 07, 2021 6:37:55 PM io.library.service.Utility closeScanner
+INFO: Scanner closed
+Jun 07, 2021 6:37:58 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 6:37:59 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 6:37:59 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 6:37:59 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 6:38:04 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 6:38:04 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 6:38:29 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 07, 2021 6:38:29 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 07, 2021 6:38:29 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:38:29 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:47:52 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 6:47:52 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 6:47:52 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 6:47:52 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 6:48:27 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 6:48:27 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 6:48:29 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 07, 2021 6:48:29 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 07, 2021 6:48:30 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:48:30 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:48:30 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 6:48:51 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:48:51 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:58:27 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:58:27 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 6:58:27 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 6:58:28 PM io.library.main.Main main
+INFO: Program exited 
+Jun 07, 2021 6:58:28 PM io.library.service.Utility closeScanner
+INFO: Scanner closed
+Jun 07, 2021 6:58:32 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 6:58:32 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 6:58:32 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 6:58:32 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 6:59:10 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 6:59:10 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 6:59:19 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 07, 2021 6:59:19 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 07, 2021 6:59:19 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 6:59:19 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:01:06 PM io.library.main.Main main
+INFO: Program exited 
+Jun 07, 2021 7:01:06 PM io.library.service.Utility closeScanner
+INFO: Scanner closed
+Jun 07, 2021 7:03:10 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 7:03:11 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 7:03:11 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 7:03:11 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 7:03:15 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 7:03:15 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 7:03:17 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 07, 2021 7:03:17 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 07, 2021 7:03:18 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 7:03:18 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:03:18 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 7:03:25 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 7:03:25 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:03:25 PM io.library.service.BorrowService borrowABook
+INFO: Book borrowed: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 7:03:32 PM io.library.main.Main main
+INFO: Program exited 
+Jun 07, 2021 7:03:32 PM io.library.service.Utility closeScanner
+INFO: Scanner closed
+Jun 07, 2021 7:05:48 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 7:05:48 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 7:05:48 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 7:05:48 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 7:05:52 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 7:05:52 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 7:05:54 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 07, 2021 7:05:54 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 07, 2021 7:05:55 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 7:05:55 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:05:55 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 7:06:02 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 7:06:02 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:06:02 PM io.library.service.BorrowService borrowABook
+INFO: Book borrowed: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 7:06:27 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 7:06:27 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:06:27 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 7:06:29 PM io.library.main.Main main
+INFO: Program exited 
+Jun 07, 2021 7:06:29 PM io.library.service.Utility closeScanner
+INFO: Scanner closed
+Jun 07, 2021 7:06:44 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 7:06:44 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 7:06:44 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 7:06:44 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 7:06:48 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 7:06:48 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 7:06:50 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 07, 2021 7:06:57 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 07, 2021 7:06:57 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 7:06:57 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:06:57 PM io.library.service.BorrowService borrowABook
+INFO: Book borrowed: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 7:07:09 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 7:07:09 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:07:09 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 7:07:13 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 7:07:13 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:07:13 PM io.library.service.BorrowService borrowABook
+INFO: Book borrowed: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 7:07:16 PM io.library.main.Main main
+INFO: Program exited 
+Jun 07, 2021 7:07:16 PM io.library.service.Utility closeScanner
+INFO: Scanner closed
+Jun 07, 2021 7:09:14 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 7:09:14 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 7:09:14 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 7:09:14 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 7:09:21 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 7:09:21 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 7:09:22 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 07, 2021 7:09:22 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 07, 2021 7:09:23 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 7:09:23 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:09:23 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 7:09:48 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 7:09:48 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:10:41 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 7:10:41 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 7:10:41 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 7:10:41 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 7:10:46 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 7:10:46 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 7:10:48 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 07, 2021 7:10:48 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 07, 2021 7:10:49 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 7:10:49 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:10:49 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 7:10:55 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 7:10:55 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:10:55 PM io.library.service.BorrowService borrowABook
+INFO: Book borrowed: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 7:12:18 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 7:12:18 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 7:12:19 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 7:12:19 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 7:12:24 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 7:12:24 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 7:12:34 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 07, 2021 7:12:37 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 07, 2021 7:12:38 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 7:12:38 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:12:38 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 7:12:40 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 7:12:40 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:12:40 PM io.library.service.BorrowService borrowABook
+INFO: Book borrowed: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 7:12:44 PM io.library.main.Main main
+INFO: Program exited 
+Jun 07, 2021 7:12:44 PM io.library.service.Utility closeScanner
+INFO: Scanner closed
+Jun 07, 2021 7:12:55 PM io.library.main.Main main
+INFO: Program started
+Jun 07, 2021 7:12:55 PM io.library.main.Main main
+INFO: Using json as Datasource
+Jun 07, 2021 7:12:56 PM io.library.datasource.DataSourceJSON createConnection
+INFO: Files loaded
+Jun 07, 2021 7:12:56 PM io.library.datasource.GlobalDataSource setDataSource
+INFO: Datasource initialized
+Jun 07, 2021 7:12:59 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from users.json
+Jun 07, 2021 7:12:59 PM io.library.auth.UserLogin loginMechanism
+INFO: Successful Login: lawrance
+Jun 07, 2021 7:13:04 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from borrow.json
+Jun 07, 2021 7:13:08 PM io.library.datasource.DataSourceJSON readFromFile
+INFO: Reading from books.json
+Jun 07, 2021 7:13:09 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 7:13:09 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:13:09 PM io.library.service.BorrowService returnTheBook
+INFO: Book returned: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 7:13:12 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to borrow.json
+Jun 07, 2021 7:13:12 PM io.library.datasource.DataSourceJSON writeToFile
+INFO: Writing to books.json
+Jun 07, 2021 7:13:12 PM io.library.service.BorrowService borrowABook
+INFO: Book borrowed: 2bba4549-7da4-44de-a5da-904514c77f00 by: lawrance
+Jun 07, 2021 7:13:15 PM io.library.main.Main main
+INFO: Program exited 
+Jun 07, 2021 7:13:15 PM io.library.service.Utility closeScanner
+INFO: Scanner closed
