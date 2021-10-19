@@ -45,6 +45,9 @@ public class Main {
                 DataSourceDatabase.getInstance().createConnection(properties);
                 GlobalDataSource.setDataSource(DataSourceDatabase.getInstance());
             }
+            else {
+                System.out.println("Data source not supported");
+            }
 
             MainMenu menu = new MainMenu();
             menu.show();
