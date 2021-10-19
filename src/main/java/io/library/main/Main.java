@@ -37,7 +37,8 @@ public class Main {
                 XMLUtility.init();
                 DataSourceJSON.getInstance().createConnection(books, users, borrow);
                 GlobalDataSource.setDataSource(DataSourceJSON.getInstance());
-            } else {
+            } 
+            else if(properties.getProperty("data-source").equals("db")) {
 
                 logger.log(Level.INFO, "Using DB as Datasource");
 
