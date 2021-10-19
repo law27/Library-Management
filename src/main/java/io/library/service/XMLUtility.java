@@ -102,7 +102,8 @@ public class XMLUtility {
             StreamResult streamResult = new StreamResult(file);
             transformer.transform(domSource, streamResult);
         } catch (TransformerException e) {
-            e.printStackTrace();
+            logger.log(CustomLevel.ERROR, e.toString(), e);
+            
             
         }
     }
