@@ -47,6 +47,7 @@ public class Main {
             }
             else {
                 System.out.println("Data source not supported");
+                logger.log(Level.INFO, "Data source not supported");
             }
 
             MainMenu menu = new MainMenu();
