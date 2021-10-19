@@ -15,10 +15,14 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class XMLUtility {
     private static DocumentBuilder documentBuilder;
     private static File file;
+    
+    private final static Logger logger = LoggingService.getLogger(XMLUtility.class);
 
     public static void init() {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -99,6 +103,7 @@ public class XMLUtility {
             transformer.transform(domSource, streamResult);
         } catch (TransformerException e) {
             e.printStackTrace();
+            
         }
     }
 }
